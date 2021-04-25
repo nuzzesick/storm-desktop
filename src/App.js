@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Header } from './containers';
+import './App.css';
 
-function App() {
+const App = () => {
+  const currentTheme = localStorage.getItem('dark');
+  const [darkTheme, setDarkTheme] = useState(currentTheme);
   return (
     <div className="App">
-      <h1>ja</h1>
+      <Header darkTheme={darkTheme} />
     </div>
   );
-}
+};
 
 export default App;
