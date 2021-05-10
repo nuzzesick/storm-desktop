@@ -5,8 +5,8 @@ import { SettingsIcon } from '../../icons';
 import './navbar.css';
 
 const Navbar = ({ darkTheme }) => (
-  <div className={`header ${darkTheme ? 'blackHeader' : 'whiteHeader'}`}>
-    <div className="headerContent">
+  <div className={`navbar ${darkTheme ? 'blackNavbar' : 'whiteNavbar'}`}>
+    <div className="navbarContent">
       <Logo width={50} />
       <button type="button" className="settings-btn">
         <SettingsIcon width={20} />

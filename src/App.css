@@ -5,13 +5,13 @@ html, body {
   padding: 0;
   height: 100%;
   /* Globals */
-  --x-header-padding: 1rem;
-  --header-bar: rgb(191, 191, 191);
+  --x-navbar-padding: 1rem;
+  --navbar-bar: rgb(191, 191, 191);
   --gray-darker: rgb(45, 45, 45);
   --gray: rgb(227, 227, 227);
   /* White theme */
   --whiteBackground: #fff;
-  --whiteHeader: rgba(255, 255, 255, 0.714);
+  --whiteNavbar: rgba(255, 255, 255, 0.803);
 }
 
 body, h1, h2, h3, h4, h5, h6, p, span, div, input, button {

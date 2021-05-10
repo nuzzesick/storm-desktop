@@ -1,23 +1,23 @@
-.header {
+.navbar {
   position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: center;
   height: 100vh;
-  backdrop-filter: blur('30px');
-  border-right: 0.1rem solid var(--header-bar);
-  padding: 0 var(--x-header-padding);
+  backdrop-filter: blur('45px');
+  border-right: 0.1rem solid var(--navbar-bar);
+  padding: 0 var(--x-navbar-padding);
 }
 
-.whiteHeader {
-  background: var(--whiteHeader);
+.whiteNavbar {
+  background: var(--whiteNavbar);
 }
 
-.whiteHeader h1, button {
+.whiteNavbar h1, button {
   color: var(--gray-darker);
 }
 
-.headerContent {
+.navbarContent {
   display: flex;
   flex-direction: column;
   align-items: center;
