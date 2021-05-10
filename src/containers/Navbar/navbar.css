@@ -26,7 +26,7 @@
   margin: auto;
 }
 
-.settings-btn {
+.settingsBtn {
   display: flex;
   align-items: center;
   font-size: 1rem;
@@ -35,13 +35,15 @@
   cursor: pointer;
   border-radius: 0.2rem;
   transition-duration: 0.3s;
+  text-decoration: none;
+  color: var(--black);
 }
 
-.settings-btn:hover {
+.settingsBtn:hover {
   background-color: var(--gray);
 }
 
-.settings-btn svg {
+.settingsBtn svg {
   margin-right: 0.4rem;
   fill: var(--gray-darker);
 }

@@ -1,0 +1,10 @@
+.pageContainer {
+  position: absolute;
+  margin: var(--page-container-margin);
+}
+
+.pageContainer h1 {
+  margin: 0;
+  padding: 0;
+  color: var(--black);
+}
