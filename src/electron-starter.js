@@ -7,11 +7,14 @@ function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    transparent: true,
+    show: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
-
+  mainWindow.maximize();
+  mainWindow.show();
   const startUrl = url.format({
     pathname: path.join(__dirname, '/../build/index.html'),
     protocol: 'file:',

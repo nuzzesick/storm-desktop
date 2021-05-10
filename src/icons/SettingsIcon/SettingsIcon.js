@@ -9,7 +9,6 @@ const SettingsIcon = ({ width }) => (
 
 SettingsIcon.propTypes = {
   width: PropTypes.number.isRequired,
-  color: PropTypes.string.isRequired,
 };
 
 export default SettingsIcon;

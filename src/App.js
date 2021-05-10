@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { Header } from './containers';
+import { Navbar } from './containers';
 import './App.css';
 
 const App = () => {
   const currentTheme = localStorage.getItem('dark');
   const [darkTheme, setDarkTheme] = useState(currentTheme);
+  console.log(setDarkTheme);
   return (
     <div className="App">
-      <Header darkTheme={darkTheme} />
+      <Navbar darkTheme={darkTheme} />
     </div>
   );
 };
