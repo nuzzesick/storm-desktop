@@ -9,7 +9,7 @@ import { Settings } from './pages';
 import './App.css';
 
 const App = () => {
-  const currentTheme = localStorage.getItem('dark');
+  const currentTheme = !!localStorage.getItem('dark');
   const [darkTheme, setDarkTheme] = useState(currentTheme);
   console.log(setDarkTheme);
   return (
@@ -18,7 +18,7 @@ const App = () => {
         <Navbar darkTheme={darkTheme} />
         <Switch>
           <Route path="/settings">
-            <Settings />
+            <Settings darkTheme={darkTheme} />
           </Route>
         </Switch>
       </div>

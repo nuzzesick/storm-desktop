@@ -20,7 +20,7 @@ const Navbar = ({ darkTheme }) => (
 );
 
 Navbar.propTypes = {
-  darkTheme: PropTypes.string.isRequired,
+  darkTheme: PropTypes.bool.isRequired,
 };
 
 export default Navbar;

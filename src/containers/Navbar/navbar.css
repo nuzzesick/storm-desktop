@@ -1,10 +1,10 @@
 .navbar {
-  position: fixed;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   height: 100vh;
-  backdrop-filter: blur('45px');
+  backdrop-filter: blur(45px);
   border-right: 0.1rem solid var(--navbar-bar);
   padding: 0 var(--x-navbar-padding);
 }
