@@ -13,7 +13,7 @@ const Navbar = ({ darkTheme }) => (
       </Link>
       <Link className="settingsBtn" to="/settings">
         <SettingsIcon width={20} />
-        Settings
+        icono - Settings
       </Link>
     </div>
   </div>
