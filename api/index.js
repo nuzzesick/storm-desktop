@@ -25,10 +25,20 @@ app.get('/info', (req, res, next) => {
     const { id: torrentId } = req.query;
     const torrent = client.get(torrentId);
     const {
-      created, createdBy, numPeers, progress, path, ready, uploadSpeed, downloadSped, timeRemaining,
+      created, createdBy, numPeers, progress, path, ready, uploadSpeed, downloadSpeed,
+      timeRemaining, done,
     } = torrent;
     res.json({
-      created, createdBy, numPeers, progress, path, ready, uploadSpeed, downloadSped, timeRemaining,
+      created,
+      createdBy,
+      numPeers,
+      progress,
+      path,
+      ready,
+      uploadSpeed,
+      downloadSpeed,
+      timeRemaining,
+      done,
     });
     resolve();
   });
