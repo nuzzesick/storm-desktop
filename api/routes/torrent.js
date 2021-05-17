@@ -1,0 +1,5 @@
+const DOWNLOAD_TORRENT_ROUTE = '/download';
+
+const GET_INFO_TORRENT_ROUTE = '/info';
+
+module.exports = { DOWNLOAD_TORRENT_ROUTE, GET_INFO_TORRENT_ROUTE };
