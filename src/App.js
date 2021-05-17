@@ -1,29 +1,24 @@
-import React, { useState } from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from 'react-router-dom';
-import { Navbar } from './containers';
-import { Settings } from './pages';
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Navbar from './containers/Navbar/Navbar';
+import Home from './pages/Home/Home';
 import './App.css';
 
-const App = () => {
-  const currentTheme = !!localStorage.getItem('dark');
-  const [darkTheme, setDarkTheme] = useState(currentTheme);
-  console.log(setDarkTheme);
-  return (
-    <Router>
+import StormProvider from './context/Storm.provider';
+
+const App = () => (
+  <Router>
+    <StormProvider>
       <div className="App">
-        <Navbar darkTheme={darkTheme} />
+        <Navbar />
         <Switch>
-          <Route path="/settings">
-            <Settings darkTheme={darkTheme} />
+          <Route path="/">
+            <Home />
           </Route>
         </Switch>
       </div>
-    </Router>
-  );
-};
+    </StormProvider>
+  </Router>
+);
 
 export default App;

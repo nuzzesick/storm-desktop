@@ -4,16 +4,7 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  /* Globals */
-  --x-navbar-padding: 1rem;
-  --page-container-padding: 5rem 0 0 10rem;
-  --navbar-bar: rgb(191, 191, 191);
-  --gray-darker: rgb(45, 45, 45);
-  --gray: rgb(227, 227, 227);
-  --black: rgb(16, 16, 16);
-  /* White theme */
-  --whiteBackground: #fff;
-  --whiteNavbar: rgba(255, 255, 255, 0.735);
+  box-sizing: border-box;
 }
 
 body, h1, h2, h3, h4, h5, h6, p, span, div, input, button {
