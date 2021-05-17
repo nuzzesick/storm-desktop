@@ -1,8 +1,9 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
-const server = require('../api/index');
+const { server } = require('../api/index');
 
+// Starting server
 server();
 
 const createWindow = () => {
