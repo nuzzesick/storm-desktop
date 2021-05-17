@@ -21,7 +21,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron": "electron ."
+    "electron": "electron .",
+    "api": "nodemon run-api"
   },
   "main": "src/electron-starter.js",
   "homepage": "./",
