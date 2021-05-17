@@ -3,7 +3,6 @@ const path = require('path');
 const url = require('url');
 const { server } = require('../api/index');
 
-// Starting server
 server();
 
 const createWindow = () => {
