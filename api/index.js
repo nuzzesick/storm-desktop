@@ -5,7 +5,7 @@ const { DOWNLOAD_TORRENT_ROUTE, GET_INFO_TORRENT_ROUTE } = require('./routes/tor
 const { downloadTorrent, getInfo } = require('./controllers/torrent');
 
 const app = express();
-const port = 3000;
+const port = 8000;
 
 const server = () => {
   app.get(DOWNLOAD_TORRENT_ROUTE, downloadTorrent);
