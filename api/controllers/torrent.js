@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+const fs = require('fs');
 const WebTorrent = require('webtorrent-hybrid');
 
 const client = new WebTorrent();
@@ -7,22 +9,6 @@ const downloadTorrent = (req, res, next) => new Promise((resolve) => {
     const { id: torrentId } = req.query;
     client.add(torrentId, { path: 'downloads' }, (torrent) => {
       client.on('torrent', () => {
-        const {
-          created, createdBy, numPeers, progress, path: pathname, ready, uploadSpeed, downloadSpeed,
-          timeRemaining, done,
-        } = torrent;
-        res.json({
-          created,
-          createdBy,
-          numPeers,
-          progress,
-          pathname,
-          ready,
-          uploadSpeed,
-          downloadSpeed,
-          timeRemaining,
-          done,
-        });
         resolve();
         next();
       });
@@ -38,15 +24,17 @@ const getInfo = (req, res, next) => new Promise((resolve) => {
     const { id: torrentId } = req.query;
     const torrent = client.get(torrentId);
     const {
-      created, createdBy, numPeers, progress, path: pathname, ready, uploadSpeed, downloadSpeed,
-      timeRemaining, done,
+      created, createdBy, numPeers, progress, path: pathname,
+      ready, uploadSpeed, downloadSpeed, timeRemaining, done,
     } = torrent;
+    const torrentName = torrent.files[0]._torrent.name;
+    const folder = `${pathname}/${torrentName}`;
     res.json({
       created,
       createdBy,
       numPeers,
       progress,
-      pathname,
+      folder,
       ready,
       uploadSpeed,
       downloadSpeed,
@@ -61,4 +49,46 @@ const getInfo = (req, res, next) => new Promise((resolve) => {
   }
 });
 
-module.exports = { downloadTorrent, getInfo };
+const deleteTorrent = (req, res, next) => new Promise((resolve) => {
+  try {
+    const { id: torrentId } = req.query;
+    client.remove(torrentId, () => {
+      res.json({
+        status: 'ok',
+        message: 'Torrent deleted',
+      });
+      resolve();
+      next();
+    });
+  } catch (error) {
+    console.log(error);
+    next();
+  }
+});
+
+const deleteTorrentAndFiles = (req, res, next) => new Promise((resolve) => {
+  try {
+    const { id: torrentId } = req.query;
+    const torrent = client.get(torrentId);
+    const { path: pathname } = torrent;
+    const torrentName = torrent.files[0]._torrent.name;
+    const folder = `${pathname}/${torrentName}`;
+    client.remove(torrentId);
+    fs.rmdir(folder, { recursive: true }, (err) => {
+      if (err) throw err;
+      res.json({
+        status: 'ok',
+        message: 'Torrent and files deleted',
+      });
+      resolve();
+      next();
+    });
+  } catch (error) {
+    console.log(error);
+    next();
+  }
+});
+
+module.exports = {
+  downloadTorrent, getInfo, deleteTorrent, deleteTorrentAndFiles,
+};
