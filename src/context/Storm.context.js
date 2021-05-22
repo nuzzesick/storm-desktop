@@ -1,8 +1,11 @@
 import React from 'react';
 
 export const defaultValue = {
-  data: { darkThemeIsActive: true },
-  actions: { updateAppTheme: () => undefined },
+  data: { darkThemeIsActive: true, isTorrentSelected: false },
+  actions: {
+    updateAppTheme: () => undefined,
+    updateIsTorrentSelected: () => undefined,
+  },
 };
 
 const StormContext = React.createContext(defaultValue);
