@@ -4,24 +4,34 @@ import Vectors from '../../commons/Vectors';
 
 import Colors from '../../commons/Colors';
 
-export const AllTorrentsIcon = styled(Vectors.AllTorrents)`
+export const AllTorrentsIcon = styled(Vectors.allTorrents)`
   margin-right: 12px;
+  width: 15px;
+  fill: ${Colors.NEUTRAL_WHITE}
 `;
 
-export const DownloadTorrentsIcon = styled(Vectors.DownloadTorrents)`
+export const DownloadTorrentsIcon = styled(Vectors.downloadTorrents)`
   margin-right: 12px;
+  width: 15px;
+  fill: ${Colors.NEUTRAL_WHITE}
 `;
 
-export const PauseTorrentsIcon = styled(Vectors.PauseTorrents)`
+export const PauseTorrentsIcon = styled(Vectors.pauseTorrents)`
   margin-right: 12px;
+  width: 15px;
+  fill: ${Colors.NEUTRAL_WHITE}
 `;
 
-export const SeedingTorrentsIcon = styled(Vectors.SeedingTorrents)`
+export const SeedingTorrentsIcon = styled(Vectors.seedingTorrents)`
   margin-right: 12px;
+  width: 15px;
+  fill: ${Colors.NEUTRAL_WHITE}
 `;
 
-export const CompletedTorrentsIcon = styled(Vectors.CompletedTorrents)`
+export const CompletedTorrentsIcon = styled(Vectors.completedTorrents)`
   margin-right: 12px;
+  width: 15px;
+  stroke: ${Colors.NEUTRAL_WHITE}
 `;
 
 export const StatusTextContent = styled.span`

@@ -1,8 +1,8 @@
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 
 import StormContext from './Storm.context';
 
-// eslint-disable-next-line react/prop-types
 const StormProvider = ({ children }) => {
   const [darkThemeIsActive, setDarkThemeIsActive] = useState(true);
 
@@ -24,6 +24,10 @@ const StormProvider = ({ children }) => {
       {children}
     </StormContext.Provider>
   );
+};
+
+StormProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default StormProvider;

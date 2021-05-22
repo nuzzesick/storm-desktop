@@ -5,11 +5,11 @@ import { ReactComponent as SeedingTorrentsIcon } from '../assets/vectors/seeding
 import { ReactComponent as CompletedTorrentsIcon } from '../assets/vectors/completed.svg';
 
 const Vectors = {
-  AllTorrents: AllTorrentsIcon,
-  DownloadTorrents: DownloadTorrentsIcon,
-  PauseTorrents: PauseTorrentsIcon,
-  SeedingTorrents: SeedingTorrentsIcon,
-  CompletedTorrents: CompletedTorrentsIcon,
+  allTorrents: AllTorrentsIcon,
+  downloadTorrents: DownloadTorrentsIcon,
+  pauseTorrents: PauseTorrentsIcon,
+  seedingTorrents: SeedingTorrentsIcon,
+  completedTorrents: CompletedTorrentsIcon,
 };
 
 export default Vectors;

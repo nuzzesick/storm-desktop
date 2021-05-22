@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   AllTorrentsIcon,
@@ -15,15 +15,9 @@ import {
   ScrollBox,
 } from './Navbar.styles';
 
-import StormContext from '../../context/Storm.context';
-
 import categoriesList from './Navbar.utils';
 
 const Navbar = () => {
-  const stormContext = useContext(StormContext);
-
-  console.log(stormContext.data.darkThemeIsActive);
-
   const statusList = [
     { id: 'all', label: 'All', icon: <AllTorrentsIcon /> },
     { id: 'downloading', label: 'Downloading', icon: <DownloadTorrentsIcon /> },
