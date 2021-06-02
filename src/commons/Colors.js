@@ -7,6 +7,7 @@ const Colors = {
 
   HIGHLIGHT1: '#4A72D9',
   HIGHLIGHT2: '#474747',
+  HIGHLIGHT3: '#35446A',
 
   // BASE_LIGHT1: '#',
   // BASE_LIGHT2: '#',

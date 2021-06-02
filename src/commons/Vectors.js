@@ -9,6 +9,7 @@ import { ReactComponent as HistoryIcon } from '../assets/vectors/history.svg';
 import { ReactComponent as SettingsIcon } from '../assets/vectors/settings.svg';
 import { ReactComponent as SearchIcon } from '../assets/vectors/search.svg';
 import { ReactComponent as PlayIcon } from '../assets/vectors/play.svg';
+import { ReactComponent as ProgressCircle } from '../assets/vectors/progress-circle.svg';
 
 const Vectors = {
   allTorrents: AllTorrentsIcon,
@@ -22,6 +23,7 @@ const Vectors = {
   settingsIcon: SettingsIcon,
   searchIcon: SearchIcon,
   playIcon: PlayIcon,
+  progressCircle: ProgressCircle,
 };
 
 export default Vectors;

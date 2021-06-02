@@ -31,11 +31,21 @@ export const AddTorrentButtonContainer = styled.button`
   padding: 0.5rem 1rem;
   cursor: pointer;
   margin-right: 2rem;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: ${Colors.HIGHLIGHT2};
+  }
 `;
 
 export const CreateTorrentButton = styled.button`
+  border-radius: 4px;
   padding: 0.5rem 1rem;
   cursor: pointer;
+
+  &:hover {
+    background-color: ${Colors.HIGHLIGHT2};
+  }
 `;
 
 export const AddTorrentIcon = styled(Vectors.addtorrentIcon)`
