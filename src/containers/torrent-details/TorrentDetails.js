@@ -7,6 +7,10 @@ import {
   ProgressText,
   TorrentSpeedChart,
   SpeedChartContainer,
+  DownloadDetailsContainer,
+  DetailContainer,
+  DetailContent,
+  DetailValue
 } from './TorrentDetails.styles';
 
 export const TorrentDetails = () => {
@@ -29,6 +33,40 @@ export const TorrentDetails = () => {
         <ProgressCircle downloadProgress={downloadCircleProgress} />
         <ProgressText>{`${downloadNumberProgress}%`}</ProgressText>
       </DownloadProgressContainer>
+      <DownloadDetailsContainer>
+        <DetailContainer>
+          <DetailContent>
+            Active
+          </DetailContent>
+          <DetailValue>
+            30min
+          </DetailValue>
+        </DetailContainer>
+        <DetailContainer>
+          <DetailContent>
+            ETA
+          </DetailContent>
+          <DetailValue>
+            30min
+          </DetailValue>
+        </DetailContainer>
+        <DetailContainer>
+          <DetailContent>
+            Seeds
+          </DetailContent>
+          <DetailValue>
+            2345
+          </DetailValue>
+        </DetailContainer>
+        <DetailContainer>
+          <DetailContent>
+            Peers
+          </DetailContent>
+          <DetailValue>
+            2345
+          </DetailValue>
+        </DetailContainer>
+      </DownloadDetailsContainer>
     </TorrentDetailsContainer>
   );
 };

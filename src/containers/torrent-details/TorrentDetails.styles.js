@@ -13,7 +13,7 @@ export const TorrentDetailsContainer = styled.div`
   align-items: center;
   bottom: 0;
   width: 100%;
-  height: 30%;
+  height: 35vh;
   background-color: ${Colors.BASE_DARK2};
 `;
 
@@ -60,5 +60,31 @@ export const TorrentSpeedChart = styled(SpeedChart)``;
 
 export const SpeedChartContainer = styled.div`
   height: 260px;
-  width: 40vw;
+  width: 50vw;
+`;
+
+export const DownloadDetailsContainer = styled.div`
+  width: 150px;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+`;
+
+export const DetailContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const DetailContent = styled.span`
+  color: ${Colors.FONT_DARK1};
+  font-size: 18px;
+`;
+
+export const DetailValue = styled.span`
+  color: ${Colors.NEUTRAL_WHITE};
+  font-size: 18px;
 `;
