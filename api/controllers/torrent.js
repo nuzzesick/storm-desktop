@@ -1,17 +1,18 @@
 /* eslint-disable no-underscore-dangle */
 const fs = require('fs');
 const WebTorrent = require('webtorrent-hybrid');
+const { recoverClient } = require('../utils');
 
-const client = new WebTorrent();
+const WebTorrentClient = new WebTorrent();
+
+const client = recoverClient(WebTorrentClient);
 
 const downloadTorrent = (req, res, next) => new Promise((resolve) => {
   try {
     const { id: torrentId } = req.query;
-    client.add(torrentId, { path: 'downloads' }, (torrent) => {
-      client.on('torrent', () => {
-        resolve();
-        next();
-      });
+    client.add(torrentId, { path: 'downloads' }, () => {
+      resolve();
+      next();
     });
   } catch (error) {
     console.log(error);
@@ -89,6 +90,32 @@ const deleteTorrentAndFiles = (req, res, next) => new Promise((resolve) => {
   }
 });
 
+const pauseTorrent = (req, res, next) => new Promise((resolve) => {
+  try {
+    const { id: torrentId } = req.query;
+    const torrent = client.get(torrentId);
+    torrent.destroy(() => {
+      resolve();
+      next();
+    });
+  } catch (error) {
+    console.log(error);
+    next();
+  }
+});
+
+const resumeTorrent = (req, res, next) => new Promise((resolve) => {
+  try {
+    const { id: torrentId } = req.query;
+    client.add(torrentId, { path: 'downloads' });
+    resolve();
+    next();
+  } catch (error) {
+    console.log(error);
+    next();
+  }
+});
+
 module.exports = {
-  downloadTorrent, getInfo, deleteTorrent, deleteTorrentAndFiles,
+  downloadTorrent, getInfo, deleteTorrent, deleteTorrentAndFiles, pauseTorrent, resumeTorrent,
 };
