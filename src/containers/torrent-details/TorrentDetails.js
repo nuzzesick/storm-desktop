@@ -10,7 +10,7 @@ import {
   DownloadDetailsContainer,
   DetailContainer,
   DetailContent,
-  DetailValue
+  DetailValue,
 } from './TorrentDetails.styles';
 
 export const TorrentDetails = () => {
@@ -35,36 +35,20 @@ export const TorrentDetails = () => {
       </DownloadProgressContainer>
       <DownloadDetailsContainer>
         <DetailContainer>
-          <DetailContent>
-            Active
-          </DetailContent>
-          <DetailValue>
-            30min
-          </DetailValue>
+          <DetailContent>Active</DetailContent>
+          <DetailValue>30min</DetailValue>
         </DetailContainer>
         <DetailContainer>
-          <DetailContent>
-            ETA
-          </DetailContent>
-          <DetailValue>
-            30min
-          </DetailValue>
+          <DetailContent>ETA</DetailContent>
+          <DetailValue>30min</DetailValue>
         </DetailContainer>
         <DetailContainer>
-          <DetailContent>
-            Seeds
-          </DetailContent>
-          <DetailValue>
-            2345
-          </DetailValue>
+          <DetailContent>Seeds</DetailContent>
+          <DetailValue>2345</DetailValue>
         </DetailContainer>
         <DetailContainer>
-          <DetailContent>
-            Peers
-          </DetailContent>
-          <DetailValue>
-            2345
-          </DetailValue>
+          <DetailContent>Peers</DetailContent>
+          <DetailValue>2345</DetailValue>
         </DetailContainer>
       </DownloadDetailsContainer>
     </TorrentDetailsContainer>

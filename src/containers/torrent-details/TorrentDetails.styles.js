@@ -56,6 +56,8 @@ export const ProgressText = styled.span`
   color: ${Colors.NEUTRAL_WHITE};
 `;
 
+
+
 export const TorrentSpeedChart = styled(SpeedChart)``;
 
 export const SpeedChartContainer = styled.div`

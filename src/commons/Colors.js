@@ -5,10 +5,13 @@ const Colors = {
   BASE_DARK4: '#3E3E3E',
   BASE_DARK5: '#BEBEBE',
   FONT_DARK1: '#8B8B8B',
+  HOVER_DARK: '#222938',
 
   HIGHLIGHT1: '#4A72D9',
   HIGHLIGHT2: '#474747',
   HIGHLIGHT3: '#35446A',
+
+  FONT1: '#C5C5C5',
 
   // BASE_LIGHT1: '#',
   // BASE_LIGHT2: '#',

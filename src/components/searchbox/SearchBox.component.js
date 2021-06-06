@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useContext } from 'react';
 
 import {
   SearchBoxContainer,
@@ -7,22 +7,29 @@ import {
   TextInput,
 } from './SearchBox.styles';
 
+import StormContext from '../../context/Storm.context';
+
 export const SearchBox = () => {
-  const [textInput, setTextInput] = useState('');
+  const stormContext = useContext(StormContext);
+  const inputText = useMemo(
+    () => stormContext.data.torrentSearch,
+    [stormContext.data.torrentSearch]
+  );
 
   const handleInputChange = (e) => {
-    setTextInput(e.target.value);
+    const inputValue = e.target.value;
+    stormContext.actions.updateTorrentSearch(inputValue);
   };
 
   const clearInputText = () => {
-    setTextInput('');
+    stormContext.actions.updateTorrentSearch('');
   };
 
   return (
     <SearchBoxContainer>
       <SearchIcon />
-      <TextInput onChange={handleInputChange} value={textInput} /> 
-      {textInput !== '' && <ClearInputIcon onClick={clearInputText} />}
+      <TextInput onChange={handleInputChange} value={inputText} />
+      {inputText !== '' && <ClearInputIcon onClick={clearInputText} />}
     </SearchBoxContainer>
   );
 };
