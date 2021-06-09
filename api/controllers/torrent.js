@@ -18,7 +18,7 @@ const downloadTorrent = (req, res, next) => new Promise((resolve) => {
       res.status(200);
       res.json({
         status: 'ok',
-        message: 'Torrent started downloading',
+        message: 'Torrent downloading',
       });
       resolve();
       next();
@@ -107,9 +107,10 @@ const deleteTorrentAndFiles = (req, res, next) => new Promise((resolve) => {
 const pauseTorrent = (req, res, next) => new Promise((resolve) => {
   try {
     const { id: torrentId } = req.query;
-    const { path } = req.headers;
+    const torrent = client.get(torrentId);
+    const { path } = torrent;
     client.remove(torrentId, () => {
-      updateTorrentOnJSON(torrentId, path || 'downloads', true);
+      updateTorrentOnJSON(torrentId, path, true);
       res.status(200);
       res.json({
         status: 'ok',
