@@ -45,6 +45,12 @@ const deleteTorrentFromJSON = (torrentId) => {
   fs.writeFileSync(filePath, JSON.stringify(filteredTorrent));
 };
 
+const getTorrentOnJSON = (torrentId) => {
+  let dataFile = fs.readFileSync(filePath);
+  dataFile = JSON.parse(dataFile);
+  return dataFile.filter((torrent) => torrent.id === torrentId);
+};
+
 module.exports = {
-  filePath, recoverClient, updateTorrentOnJSON, deleteTorrentFromJSON,
+  filePath, recoverClient, updateTorrentOnJSON, deleteTorrentFromJSON, getTorrentOnJSON,
 };

@@ -2,7 +2,7 @@
 const fs = require('fs');
 const WebTorrent = require('webtorrent-hybrid');
 const {
-  filePath, recoverClient, updateTorrentOnJSON, deleteTorrentFromJSON,
+  filePath, recoverClient, updateTorrentOnJSON, deleteTorrentFromJSON, getTorrentOnJSON,
 } = require('../utils');
 
 const WebTorrentClient = new WebTorrent();
@@ -80,13 +80,7 @@ const deleteTorrent = (req, res, next) => new Promise((resolve) => {
 });
 
 const deleteTorrentAndFiles = (req, res, next) => new Promise((resolve) => {
-  try {
-    const { id: torrentId } = req.query;
-    const torrent = client.get(torrentId);
-    const { path: pathname } = torrent;
-    const torrentName = torrent.files[0]._torrent.name;
-    const folder = `${pathname}/${torrentName}`;
-    client.remove(torrentId);
+  const deleteSystemFiles = (folder, torrentId) => {
     fs.rmdir(folder, { recursive: true }, (err) => {
       if (err) throw err;
       deleteTorrentFromJSON(torrentId);
@@ -98,6 +92,35 @@ const deleteTorrentAndFiles = (req, res, next) => new Promise((resolve) => {
       resolve();
       next();
     });
+  };
+  try {
+    const { id: torrentId } = req.query;
+    const torrent = client.get(torrentId);
+    let folder;
+    if (!torrent) {
+      const previousTorrent = getTorrentOnJSON(torrentId);
+      if (previousTorrent.length > 0) {
+        client.add(torrentId, { path: previousTorrent[0].path }, (newTorrent) => {
+          const { path: pathname } = newTorrent;
+          const torrentName = newTorrent.files[0]._torrent.name;
+          folder = `${pathname}/${torrentName}`;
+          client.remove(torrentId);
+          deleteSystemFiles(folder, torrentId);
+        });
+      } else {
+        res.status(404);
+        res.json({
+          status: 'error',
+          message: 'Torrent does not exists',
+        });
+      }
+    } else {
+      const { path: pathname } = torrent;
+      const torrentName = torrent.files[0]._torrent.name;
+      folder = `${pathname}/${torrentName}`;
+      client.remove(torrentId);
+      deleteSystemFiles(folder, torrentId);
+    }
   } catch (error) {
     console.log(error);
     next();
