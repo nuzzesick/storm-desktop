@@ -12,8 +12,9 @@ const client = recoverClient(WebTorrentClient);
 const downloadTorrent = (req, res, next) => new Promise((resolve) => {
   try {
     const { id: torrentId } = req.query;
-    client.add(torrentId, { path: 'downloads' }, () => {
-      updateTorrentOnJSON(torrentId, 'downloads', false);
+    const { path } = req.headers;
+    client.add(torrentId, { path: path || 'downloads' }, () => {
+      updateTorrentOnJSON(torrentId, path || 'downloads', false);
       res.status(200);
       res.json({
         status: 'ok',
@@ -106,8 +107,9 @@ const deleteTorrentAndFiles = (req, res, next) => new Promise((resolve) => {
 const pauseTorrent = (req, res, next) => new Promise((resolve) => {
   try {
     const { id: torrentId } = req.query;
+    const { path } = req.headers;
     client.remove(torrentId, () => {
-      updateTorrentOnJSON(torrentId, 'downloads', true);
+      updateTorrentOnJSON(torrentId, path || 'downloads', true);
       res.status(200);
       res.json({
         status: 'ok',
