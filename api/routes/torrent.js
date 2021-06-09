@@ -8,7 +8,7 @@ const DELETE_TORRENT_AND_FILES_ROUTE = '/delete-all';
 
 const PAUSE_TORRENT = '/pause';
 
-const RESUME_TORRENT = '/resume';
+const TORRENTS = '/torrents';
 
 module.exports = {
   DOWNLOAD_TORRENT_ROUTE,
@@ -16,5 +16,5 @@ module.exports = {
   DELETE_TORRENT_ROUTE,
   DELETE_TORRENT_AND_FILES_ROUTE,
   PAUSE_TORRENT,
-  RESUME_TORRENT,
+  TORRENTS,
 };

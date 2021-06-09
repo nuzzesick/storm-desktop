@@ -1,7 +1,9 @@
 /* eslint-disable no-underscore-dangle */
 const fs = require('fs');
 const WebTorrent = require('webtorrent-hybrid');
-const { recoverClient } = require('../utils');
+const {
+  filePath, recoverClient, updateTorrentOnJSON, deleteTorrentFromJSON,
+} = require('../utils');
 
 const WebTorrentClient = new WebTorrent();
 
@@ -11,6 +13,12 @@ const downloadTorrent = (req, res, next) => new Promise((resolve) => {
   try {
     const { id: torrentId } = req.query;
     client.add(torrentId, { path: 'downloads' }, () => {
+      updateTorrentOnJSON(torrentId, 'downloads', false);
+      res.status(200);
+      res.json({
+        status: 'ok',
+        message: 'Torrent started downloading',
+      });
       resolve();
       next();
     });
@@ -30,6 +38,7 @@ const getInfo = (req, res, next) => new Promise((resolve) => {
     } = torrent;
     const torrentName = torrent.files[0]._torrent.name;
     const folder = `${pathname}/${torrentName}`;
+    res.status(200);
     res.json({
       created,
       createdBy,
@@ -54,6 +63,8 @@ const deleteTorrent = (req, res, next) => new Promise((resolve) => {
   try {
     const { id: torrentId } = req.query;
     client.remove(torrentId, () => {
+      deleteTorrentFromJSON(torrentId);
+      res.status(200);
       res.json({
         status: 'ok',
         message: 'Torrent deleted',
@@ -77,6 +88,8 @@ const deleteTorrentAndFiles = (req, res, next) => new Promise((resolve) => {
     client.remove(torrentId);
     fs.rmdir(folder, { recursive: true }, (err) => {
       if (err) throw err;
+      deleteTorrentFromJSON(torrentId);
+      res.status(200);
       res.json({
         status: 'ok',
         message: 'Torrent and files deleted',
@@ -93,8 +106,13 @@ const deleteTorrentAndFiles = (req, res, next) => new Promise((resolve) => {
 const pauseTorrent = (req, res, next) => new Promise((resolve) => {
   try {
     const { id: torrentId } = req.query;
-    const torrent = client.get(torrentId);
-    torrent.destroy(() => {
+    client.remove(torrentId, () => {
+      updateTorrentOnJSON(torrentId, 'downloads', true);
+      res.status(200);
+      res.json({
+        status: 'ok',
+        message: 'Torrent paused',
+      });
       resolve();
       next();
     });
@@ -104,10 +122,12 @@ const pauseTorrent = (req, res, next) => new Promise((resolve) => {
   }
 });
 
-const resumeTorrent = (req, res, next) => new Promise((resolve) => {
+const getAllTorrents = (req, res, next) => new Promise((resolve) => {
   try {
-    const { id: torrentId } = req.query;
-    client.add(torrentId, { path: 'downloads' });
+    const dataFile = fs.readFileSync(filePath);
+    const torrentsList = JSON.parse(dataFile);
+    res.status(200);
+    res.json(torrentsList);
     resolve();
     next();
   } catch (error) {
@@ -117,5 +137,5 @@ const resumeTorrent = (req, res, next) => new Promise((resolve) => {
 });
 
 module.exports = {
-  downloadTorrent, getInfo, deleteTorrent, deleteTorrentAndFiles, pauseTorrent, resumeTorrent,
+  downloadTorrent, getInfo, deleteTorrent, deleteTorrentAndFiles, pauseTorrent, getAllTorrents,
 };
