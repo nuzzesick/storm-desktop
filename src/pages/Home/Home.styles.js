@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import MaterialTable from 'material-table';
 
 import Colors from '../../commons/Colors';
 
