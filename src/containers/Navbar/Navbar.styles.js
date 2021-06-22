@@ -112,3 +112,13 @@ export const TitleTextContent = styled.span`
   font-size: 20px;
   margin-bottom: 1rem;
 `;
+
+export const SearchBox = styled.input`
+  width: 150px;
+  height: 60px;
+  background-color: white;
+
+  &:focus {
+    background-color: white;
+  }
+`;
