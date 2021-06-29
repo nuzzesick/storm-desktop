@@ -1,6 +1,5 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
-const url = require('url');
 const { server } = require('../api/index');
 
 server();
@@ -8,19 +7,11 @@ server();
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
+    width: 1300,
     height: 600,
-    transparent: true,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-    },
   });
-  const startUrl = url.format({
-    pathname: path.join(__dirname, '/../build/index.html'),
-    protocol: 'file:',
-    slashes: true,
-  });
-  mainWindow.loadURL(startUrl);
+
+  mainWindow.loadFile(path.join(__dirname, '/../build/index.html'));
 };
 
 app.whenReady().then(() => {

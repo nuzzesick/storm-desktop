@@ -1,18 +1,18 @@
-import React from 'react';
-
-import { Toolbar } from '../../containers/toolbar/Toolbar.component';
-import { TorrentDetails } from '../../containers/torrent-details/TorrentDetails';
-import { ClientTorrentsTable } from '../../components/client-torrents-table/ClientTorrentsTable';
-
+import React, { useState } from 'react';
+import { Navbar, TopBar, Table } from '../../containers';
 import { HomePageContainer } from './Home.styles';
 
-const Home = () => (
-  <HomePageContainer>
-    <Toolbar />
-    <ClientTorrentsTable />
-    {/* <AnimatedGradient>Seeding</AnimatedGradient> */}
-    <TorrentDetails />
-  </HomePageContainer>
-);
+const Home = () => {
+  const [activeFilter, setActiveFilter] = useState(1);
+  return (
+    <>
+      <Navbar />
+      <HomePageContainer>
+        <TopBar activeFilter={activeFilter} setActiveFilte={setActiveFilter} />
+        <Table />
+      </HomePageContainer>
+    </>
+  );
+};
 
 export default Home;

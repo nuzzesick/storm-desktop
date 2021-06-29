@@ -36,7 +36,7 @@ export const CompletedTorrentsIcon = styled(Vectors.completedTorrents)`
 
 export const StatusTextContent = styled.span`
   color: ${Colors.NEUTRAL_WHITE};
-  font-size: 18px;
+  font-size: 16px;
 `;
 
 export const NavBarContentContainer = styled.div`
@@ -82,16 +82,22 @@ export const ScrollBox = styled.div`
 `;
 
 export const StatusButton = styled.button`
+  display: flex;
+  align-items: center;
   text-align: left;
   width: 100%;
   border-radius: 4px;
   margin: 8px 0;
   padding: 0.5rem 1rem;
   z-index: 10;
+  transition: 0.3s;
+  cursor: pointer;
   &:hover {
     background-color: ${Colors.HIGHLIGHT1};
-    cursor: pointer;
   }
+  ${({ active }) => active && `
+    background-color: ${Colors.HIGHLIGHT1};
+  `}
 `;
 
 export const CategoryButton = styled.button`
@@ -101,6 +107,7 @@ export const CategoryButton = styled.button`
   margin: 8px 0;
   padding: 0.5rem 1rem;
   z-index: 10;
+  transition: 0.3s;
   &:hover {
     background-color: ${Colors.HIGHLIGHT2};
     cursor: pointer;
@@ -108,8 +115,8 @@ export const CategoryButton = styled.button`
 `;
 
 export const TitleTextContent = styled.span`
-  color: ${Colors.NEUTRAL_WHITE};
-  font-size: 20px;
+  color: ${Colors.BASE_DARK4};
+  font-size: 14px;
   margin-bottom: 1rem;
 `;
 
