@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 // File where all the torrents (as an array) will be stored
-const filePath = './public/data.json';
+const filePath = './data/data.json';
 
 const recoverClient = (client) => {
   const recoveredClient = client;

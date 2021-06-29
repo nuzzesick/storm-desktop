@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable react/jsx-fragments */
+import React, { useState, Fragment } from 'react';
 import { downloadTorrent } from '../../api/torrents';
 import {
   TopBarContainer, TopBarContent, ActionButtonsContainer, ActionButton, Dialog, Form,
@@ -13,7 +14,7 @@ const TopBar = () => {
     setIsDialogOpen(false);
   };
   return (
-    <>
+    <Fragment>
       <TopBarContainer>
         <TopBarContent>
           <ActionButtonsContainer>
@@ -43,7 +44,7 @@ const TopBar = () => {
         </Dialog>
         )
       }
-    </>
+    </Fragment>
   );
 };
 
