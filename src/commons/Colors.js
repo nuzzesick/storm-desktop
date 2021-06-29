@@ -6,6 +6,9 @@ const Colors = {
 
   HIGHLIGHT1: '#4A72D9',
   HIGHLIGHT2: '#474747',
+  HIGHLIGHT3: '#35446A',
+
+  FONT1: '#C5C5C5',
 
   BASE_LIGHT1: '#FBFBFB',
   BASE_LIGHT2: '#C5C5C5',
