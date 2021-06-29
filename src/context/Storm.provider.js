@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 
 import StormContext from './Storm.context';
 
-const socket = io('http://localhost:8000');
+const socket = io('http://localhost:8001');
 
 setInterval(() => {
   socket.emit('get:list');

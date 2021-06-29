@@ -1,4 +1,5 @@
-import React, { useContext, useEffect } from 'react';
+/* eslint-disable react/jsx-fragments */
+import React, { useContext, Fragment } from 'react';
 import StormContext from '../../context/Storm.context';
 import { formatBytes, msToTime } from '../../utils';
 import { TableContainer } from './Table.styles';
@@ -21,7 +22,7 @@ const Table = () => {
         {
           torrentsList.length > 0 && torrentsList.map((torrent) => (
             <tr key={`table-row-${torrent.name}`}>
-              <>
+              <Fragment>
                 <td>{torrent.name}</td>
                 <td>
                   {(torrent.progress * 100).toFixed(2)}
@@ -33,7 +34,7 @@ const Table = () => {
                 <td>{formatBytes(torrent.uploadSpeed)}</td>
                 <td>{torrent.done ? 'Done' : msToTime(torrent.timeRemaining)}</td>
                 <td>{(torrent.ratio * 100).toFixed(2)}</td>
-              </>
+              </Fragment>
             </tr>
           ))
         }
