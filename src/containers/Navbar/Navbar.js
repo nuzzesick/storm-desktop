@@ -19,7 +19,9 @@ import categoriesList from './Navbar.utils';
 
 const Navbar = () => {
   const statusList = [
-    { id: 'all', label: 'All', icon: <AllTorrentsIcon /> },
+    {
+      id: 'all', label: 'All', icon: <AllTorrentsIcon />, active: true,
+    },
     { id: 'downloading', label: 'Downloading', icon: <DownloadTorrentsIcon /> },
     { id: 'seeding', label: 'Seeding', icon: <SeedingTorrentsIcon /> },
     { id: 'paused', label: 'Paused', icon: <PauseTorrentsIcon /> },
@@ -37,7 +39,7 @@ const Navbar = () => {
       <ListContainer>
         <TitleTextContent>STATUS</TitleTextContent>
         {statusList.map((item) => (
-          <StatusButton key={item.id}>
+          <StatusButton active={item.active} key={item.id}>
             {item.icon}
             <StatusTextContent>{item.label}</StatusTextContent>
           </StatusButton>

@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const defaultValue = {
-  data: { darkThemeIsActive: true },
+  data: { darkThemeIsActive: true, torrentsList: [] },
   actions: { updateAppTheme: () => undefined },
 };
 
