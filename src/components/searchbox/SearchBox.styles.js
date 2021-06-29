@@ -9,7 +9,7 @@ export const SearchBoxContainer = styled.div`
   align-items: center;
   height: 36px;
   width: 100%;
-  background-color: ${Colors.BASE_DARK4};
+  background-color: ${Colors.BASE_DARK6};
   padding: 0 0.6rem;
   border-radius: 4px;
 `;
@@ -22,7 +22,7 @@ export const SearchIcon = styled(Vectors.searchIcon)`
 `;
 
 export const ClearInputIcon = styled(Vectors.deleteIcon)`
-  stroke: ${Colors.BASE_DARK5};
+  stroke: ${Colors.HIGHLIGHT4};
   width: 32px;
   cursor: pointer;
 `;

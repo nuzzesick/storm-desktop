@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useMemo, Fragment, useState } from 'react';
 
 import { SearchBox } from '../../components/searchbox/SearchBox.component';
 
@@ -19,6 +19,7 @@ import {
   TorrentActionsButton,
   TorrentActionsContainer,
 } from './Toolbar.styles';
+import AddTorrentModal from '../../components/add-torrent-modal/AddTorrentModal.component';
 
 export const Toolbar = () => {
   const stormContext = useContext(StormContext);
@@ -27,6 +28,8 @@ export const Toolbar = () => {
     () => stormContext.data.isTorrentSelected,
     [stormContext.data.isTorrentSelected]
   );
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
     <ToolbarContainer>
@@ -46,21 +49,27 @@ export const Toolbar = () => {
           <SettingsIcon />
         </MainContentContainer>
       ) : (
-        <MainContentContainer>
-          <ContentContainer>
-            <AddTorrentButtonContainer>
-              <AddTorrentIcon />
-              <ButtonLabel>Add new torrent</ButtonLabel>
-            </AddTorrentButtonContainer>
-            <CreateTorrentButton>
-              <ButtonLabel>Create torrent</ButtonLabel>
-            </CreateTorrentButton>
-          </ContentContainer>
-          <ContentContainer>
-            <SearchBox />
-            <SettingsIcon />
-          </ContentContainer>
-        </MainContentContainer>
+        <Fragment>
+          <MainContentContainer>
+            <ContentContainer>
+              <AddTorrentButtonContainer onClick={() => setIsDialogOpen(true)}>
+                <AddTorrentIcon />
+                <ButtonLabel>Add new torrent</ButtonLabel>
+              </AddTorrentButtonContainer>
+              <CreateTorrentButton>
+                <ButtonLabel>Create torrent</ButtonLabel>
+              </CreateTorrentButton>
+            </ContentContainer>
+            <ContentContainer>
+              <SearchBox />
+              <SettingsIcon />
+            </ContentContainer>
+          </MainContentContainer>
+          {
+            isDialogOpen &&
+              <AddTorrentModal setIsDialogOpen={setIsDialogOpen}/>
+          }
+        </Fragment>
       )}
     </ToolbarContainer>
   );
