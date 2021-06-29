@@ -2,7 +2,11 @@
 const fs = require('fs');
 const WebTorrent = require('webtorrent');
 const {
-  filePath, recoverClient, updateTorrentOnJSON, deleteTorrentFromJSON, getTorrentOnJSON,
+  filePath,
+  recoverClient,
+  updateTorrentOnJSON,
+  deleteTorrentFromJSON,
+  getTorrentOnJSON,
 } = require('../utils');
 
 const WebTorrentClient = new WebTorrent();

@@ -6851,9 +6851,8 @@
     "statuses" ">= 1.5.0 < 2"
     "toidentifier" "1.0.0"
 
-"http-node@github:feross/http-node#webtorrent":
+"http-node@git+ssh://git@github.com/feross/http-node.git#342ef8624495343ffd050bd0808b3750cf0e3974":
   "resolved" "git+ssh://git@github.com/feross/http-node.git#342ef8624495343ffd050bd0808b3750cf0e3974"
-  "version" "1.2.0"
   dependencies:
     "chrome-net" "^3.3.3"
     "freelist" "^1.0.3"
@@ -13673,7 +13672,7 @@
     "end-of-stream" "^1.4.4"
     "escape-html" "^1.0.3"
     "fs-chunk-store" "^2.0.3"
-    "http-node" "github:feross/http-node#webtorrent"
+    "http-node" "git+ssh://git@github.com/feross/http-node.git#342ef8624495343ffd050bd0808b3750cf0e3974"
     "immediate-chunk-store" "^2.2.0"
     "load-ip-set" "^2.2.1"
     "lt_donthave" "^1.0.1"
