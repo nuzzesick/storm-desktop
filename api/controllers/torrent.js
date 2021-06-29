@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 const fs = require('fs');
-const WebTorrent = require('webtorrent');
+const WebTorrent = require('webtorrent-hybrid');
 const {
   filePath,
   recoverClient,
