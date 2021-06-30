@@ -24,11 +24,11 @@ export const TableContainer = styled.table`
 `;
 
 export const TorrentNameContainer = styled.td`
-  width: 20%;
+  width: 12rem;
 `;
 
 export const TorrentName = styled.span`
-  width: 90%;
+  width: 11rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
