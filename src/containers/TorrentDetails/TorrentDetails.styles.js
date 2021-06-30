@@ -4,7 +4,7 @@ import Colors from '../../commons/Colors';
 
 import Vectors from '../../commons/Vectors';
 
-import { SpeedChart } from '../../components/speed-chart/SpeedChart';
+import { SpeedChart } from '../../components/SpeedChart/SpeedChart';
 
 export const TorrentDetailsContainer = styled.div`
   position: absolute;
@@ -55,8 +55,6 @@ export const ProgressText = styled.span`
   font-size: 36px;
   color: ${Colors.NEUTRAL_WHITE};
 `;
-
-
 
 export const TorrentSpeedChart = styled(SpeedChart)``;
 
