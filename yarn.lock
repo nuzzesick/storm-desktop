@@ -13656,10 +13656,10 @@
   "resolved" "https://registry.npmjs.org/websocket-extensions/-/websocket-extensions-0.1.4.tgz"
   "version" "0.1.4"
 
-"webtorrent@^1.0.2":
-  "integrity" "sha512-uv9fq5md/98JyeDDyziy1H28Wc/idO80AKv+9pQ4XK0WNNjdE3FMtCKfrvU2VNS1PdAOrA6sFuUq2x0mV7k7WQ=="
-  "resolved" "https://registry.npmjs.org/webtorrent/-/webtorrent-1.0.2.tgz"
-  "version" "1.0.2"
+"webtorrent@^1.0.0":
+  "integrity" "sha512-htwcY5OBOWL/OMwaw3xi1Mp2gE9k5UmGTKeO3n1ixQDH9QgeqqRlBJz2ZLEyOL8yN1FdS/D9z+ijm06bZ3oW5w=="
+  "resolved" "https://registry.npmjs.org/webtorrent/-/webtorrent-1.0.0.tgz"
+  "version" "1.0.0"
   dependencies:
     "addr-to-ip-port" "^1.5.1"
     "bitfield" "^4.0.0"
@@ -13704,7 +13704,6 @@
     "unordered-array-remove" "^1.0.2"
     "ut_metadata" "^3.5.2"
     "ut_pex" "^3.0.0"
-  optionalDependencies:
     "utp-native" "^2.4.0"
 
 "whatwg-encoding@^1.0.5":
