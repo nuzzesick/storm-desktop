@@ -16,8 +16,14 @@ const Colors = {
   BASE_LIGHT1: '#FBFBFB',
   BASE_LIGHT2: '#C5C5C5',
 
+  INPUT_DARK1: '#262d38',
+  INPUT_DARK2: '#353d4a',
+
   NEUTRAL_WHITE: '#FFFFFF',
   NEUTRAL_BLACK: '#000000',
+
+  DISABLED: '#424141',
+  DISABLED_TEXT: '#696969',
 };
 
 export default Colors;

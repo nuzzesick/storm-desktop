@@ -22,7 +22,6 @@ export const MainContentContainer = styled.div`
 export const ContentContainer = styled.div`
   display: flex;
   align-items: center;
-  width: 30%;
 `;
 
 export const AddTorrentButtonContainer = styled.button`
@@ -30,8 +29,9 @@ export const AddTorrentButtonContainer = styled.button`
   align-items: center;
   padding: 0.5rem 1rem;
   cursor: pointer;
-  margin-right: 2rem;
+  margin-right: 1rem;
   border-radius: 4px;
+  transition: 0.4s;
 
   &:hover {
     background-color: ${Colors.HIGHLIGHT2};
@@ -42,6 +42,7 @@ export const CreateTorrentButton = styled.button`
   border-radius: 4px;
   padding: 0.5rem 1rem;
   cursor: pointer;
+  transition: 0.4s;
 
   &:hover {
     background-color: ${Colors.HIGHLIGHT2};
@@ -53,7 +54,7 @@ export const AddTorrentIcon = styled(Vectors.addtorrentIcon)`
 `;
 
 export const ButtonLabel = styled.span`
-  font-size: 18px;
+  font-size: 16px;
   color: ${Colors.NEUTRAL_WHITE};
 `;
 
