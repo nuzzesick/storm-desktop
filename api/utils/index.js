@@ -5,21 +5,19 @@ const pathFunc = require('path');
 const folder = '../../data/';
 const filePath = './data/data.json';
 
-const getDataFolder = () => {
-  try {
-    if (!fs.existsSync(folder)) {
-      fs.mkdir(pathFunc.join(__dirname, folder), (err) => {
-        if (err) return err;
-      });
-    }
-  } catch (error) {
-    return error;
+const getDataFolder = () => new Promise((resolve, reject) => {
+  if (!fs.existsSync(folder)) {
+    fs.mkdir(pathFunc.join(__dirname, folder), (err) => {
+      if (err) reject(err);
+      resolve();
+    });
   }
-};
+  resolve();
+});
 
-const recoverClient = (client) => {
+const recoverClient = async (client) => {
   const recoveredClient = client;
-  getDataFolder();
+  await getDataFolder();
   // Create the file if it does not exists
   if (!fs.existsSync(filePath)) {
     fs.writeFileSync(filePath, JSON.stringify([]));

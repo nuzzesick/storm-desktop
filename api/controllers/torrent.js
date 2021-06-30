@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 const fs = require('fs');
-const WebTorrent = require('webtorrent-hybrid');
+const WebTorrent = require('webtorrent');
 const {
   filePath,
   recoverClient,
@@ -11,7 +11,12 @@ const {
 
 const WebTorrentClient = new WebTorrent();
 
-const client = recoverClient(WebTorrentClient);
+let client;
+
+recoverClient(WebTorrentClient)
+  .then((recoveredClient) => {
+    client = recoveredClient;
+  });
 
 const downloadTorrent = (req, res, next) => {
   try {
