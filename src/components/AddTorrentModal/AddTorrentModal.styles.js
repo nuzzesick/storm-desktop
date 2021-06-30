@@ -2,46 +2,6 @@ import styled from 'styled-components';
 
 import Colors from '../../commons/Colors';
 
-export const TopBarContainer = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 4.3rem;
-  background-color: ${Colors.BASE_DARK2};
-`;
-
-export const TopBarContent = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  justify-content: space-between;
-  padding: 0 1.125rem;
-`;
-
-export const ActionButtonsContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-export const ActionButton = styled.button`
-  display: flex;
-  align-items: center;
-  outline: 0;
-  background-color: transparent;
-  border: none;
-  border-radius: 3px;
-  color: ${Colors.NEUTRAL_WHITE};
-  font-weight: 600;
-  font-size: 15px;
-  padding: 0.55rem 1rem;
-  cursor: pointer;
-  transition: 0.3s;
-  margin-right: 1.2rem;
-  &:hover {
-    background-color: ${Colors.HIGHLIGHT2};;
-  }
-`;
-
 export const Dialog = styled.div`
   display: flex;
   flex-direction: column;
@@ -81,4 +41,12 @@ export const Form = styled.form`
       background-color: ${Colors.HIGHLIGHT1};
     }
   }
+`;
+
+export const Input = styled.input`
+
+`;
+
+export const Button = styled.button`
+
 `;
