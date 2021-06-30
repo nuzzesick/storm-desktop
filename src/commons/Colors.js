@@ -24,6 +24,8 @@ const Colors = {
 
   DISABLED: '#424141',
   DISABLED_TEXT: '#696969',
+
+  PROGRESS_BAR: '#30353e',
 };
 
 export default Colors;

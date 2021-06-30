@@ -1,8 +1,10 @@
 /* eslint-disable react/jsx-fragments */
-import React, { useContext, Fragment } from 'react';
+import React, { useContext } from 'react';
 import StormContext from '../../context/Storm.context';
 import { formatBytes, msToTime } from '../../utils';
-import { TableContainer } from './Table.styles';
+import {
+  TableContainer, TorrentNameContainer, TorrentName, ProgressBarContainer, ProgressBar, Progress,
+} from './Table.styles';
 import { tableRows } from './Table.utils';
 
 const Table = () => {
@@ -22,19 +24,22 @@ const Table = () => {
         {
           torrentsList.length > 0 && torrentsList.map((torrent) => (
             <tr key={`table-row-${torrent.name}`}>
-              <Fragment>
-                <td>{torrent.name}</td>
-                <td>
-                  {(torrent.progress * 100).toFixed(2)}
-                  %
-                </td>
+              <>
+                <TorrentNameContainer>
+                  <TorrentName>{torrent.name}</TorrentName>
+                </TorrentNameContainer>
+                <ProgressBarContainer>
+                  <ProgressBar>
+                    <Progress style={{ width: `${(torrent.progress * 100).toFixed(2)}%` }} />
+                  </ProgressBar>
+                </ProgressBarContainer>
                 <td>{formatBytes(torrent.length)}</td>
                 <td>{torrent.numPeers}</td>
                 <td>{formatBytes(torrent.downloadSpeed)}</td>
                 <td>{formatBytes(torrent.uploadSpeed)}</td>
                 <td>{torrent.done ? 'Done' : msToTime(torrent.timeRemaining)}</td>
                 <td>{(torrent.ratio * 100).toFixed(2)}</td>
-              </Fragment>
+              </>
             </tr>
           ))
         }
