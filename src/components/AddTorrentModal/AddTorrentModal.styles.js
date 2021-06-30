@@ -30,7 +30,7 @@ export const Title = styled.span`
   font-size: 26px;
   font-weight: 600;
   color: ${Colors.NEUTRAL_WHITE};
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.6rem;
 `;
 
 export const Subtitle = styled.span`
