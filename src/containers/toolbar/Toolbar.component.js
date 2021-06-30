@@ -1,6 +1,8 @@
-import React, { useContext, useMemo, Fragment, useState } from 'react';
+import React, {
+  useContext, useMemo, Fragment, useState,
+} from 'react';
 
-import { SearchBox } from '../../components/searchbox/SearchBox.component';
+import { SearchBox } from '../../components/SearchBox/SearchBox.component';
 
 import StormContext from '../../context/Storm.context';
 
@@ -19,14 +21,14 @@ import {
   TorrentActionsButton,
   TorrentActionsContainer,
 } from './Toolbar.styles';
-import AddTorrentModal from '../../components/add-torrent-modal/AddTorrentModal.component';
+import AddTorrentModal from '../../components/AddTorrentModal/AddTorrentModal.component';
 
 export const Toolbar = () => {
   const stormContext = useContext(StormContext);
 
   const isTorrentSelected = useMemo(
     () => stormContext.data.isTorrentSelected,
-    [stormContext.data.isTorrentSelected]
+    [stormContext.data.isTorrentSelected],
   );
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -49,7 +51,7 @@ export const Toolbar = () => {
           <SettingsIcon />
         </MainContentContainer>
       ) : (
-        <Fragment>
+        <>
           <MainContentContainer>
             <ContentContainer>
               <AddTorrentButtonContainer onClick={() => setIsDialogOpen(true)}>
@@ -66,10 +68,10 @@ export const Toolbar = () => {
             </ContentContainer>
           </MainContentContainer>
           {
-            isDialogOpen &&
-              <AddTorrentModal setIsDialogOpen={setIsDialogOpen}/>
+            isDialogOpen
+              && <AddTorrentModal setIsDialogOpen={setIsDialogOpen} />
           }
-        </Fragment>
+        </>
       )}
     </ToolbarContainer>
   );
