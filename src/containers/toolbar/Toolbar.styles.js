@@ -29,7 +29,7 @@ export const AddTorrentButtonContainer = styled.button`
   align-items: center;
   padding: 0.5rem 1rem;
   cursor: pointer;
-  margin-right: 1rem;
+  margin: 0 1rem 0 -1rem;
   border-radius: 4px;
   transition: 0.4s;
 
