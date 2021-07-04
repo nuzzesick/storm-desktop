@@ -8,16 +8,27 @@ export const Dialog = styled.div`
   align-items: center;
   justify-content: center;
   position: fixed;
-  width: 60%;
-  height: 40vh;
   top: 0;
-  left: 250px;
+  left: 0;
   right: 0;
   bottom: 0;
-  margin: auto;
+  z-index: 1;
+  background: #020202d1;
+  transition: 0.3s;
+`;
+
+export const DialogContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  height: 25rem;
   background-color: ${Colors.BASE_DARK2};
   border-radius: 8px;
-  box-shadow: 0px 6px 20px #00000033
+  box-shadow: 0px 6px 20px #00000033;
+  margin: auto;
+  margin-left: 25%;
 `;
 
 export const Form = styled.form`

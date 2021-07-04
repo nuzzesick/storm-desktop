@@ -12,9 +12,9 @@ setInterval(() => {
 
 const StormProvider = ({ children }) => {
   const [darkThemeIsActive, setDarkThemeIsActive] = useState(true);
-  const [torrentsList, setTorrentsList] = useState([]);
+  const [torrentsList, setTorrentsList] = useState(null);
   const [isTorrentSelected, setIsTorrentSelected] = useState(false);
-  const [torrentSearch, setTorrentSearch] = useState(null);
+  const [torrentSearch, setTorrentSearch] = useState('');
 
   const updateAppTheme = () => {
     setDarkThemeIsActive(!darkThemeIsActive);

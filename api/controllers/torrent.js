@@ -22,8 +22,9 @@ const downloadTorrent = (req, res, next) => {
   try {
     const { id: torrentId } = req.query;
     const { path } = req.body;
-    client.add(torrentId, { path: path || 'downloads' }, () => {
-      updateTorrentOnJSON(torrentId, path || 'downloads', false);
+    client.add(torrentId, { path: path || 'downloads' }, (t) => {
+      const date = new Date();
+      updateTorrentOnJSON(t.name, torrentId, t.length, path || 'downloads', false, date);
       res.status(200);
       res.json({
         status: 'ok',
@@ -140,8 +141,9 @@ const pauseTorrent = (req, res, next) => {
     const { id: torrentId } = req.query;
     const torrent = client.get(torrentId);
     const { path } = torrent;
-    client.remove(torrentId, () => {
-      updateTorrentOnJSON(torrentId, path, true);
+    client.remove(torrentId, (t) => {
+      const date = new Date();
+      updateTorrentOnJSON(t.name, torrentId, t.length, path, true, date);
       res.status(200);
       res.json({
         status: 'ok',
@@ -158,40 +160,60 @@ const pauseTorrent = (req, res, next) => {
 const getAllTorrents = () => {
   const dataFile = fs.readFileSync(filePath);
   const torrentsInJSON = dataFile && JSON.parse(dataFile);
-  const torrentsList = [];
+  let areTorrentsPaused = false;
+  let torrentsList = [];
   try {
     if (torrentsInJSON && torrentsInJSON.length > 0) {
       torrentsInJSON.forEach((t) => {
-        const torrent = client.get(t.id);
-        if (torrent.ready) {
-          const {
-            name, created, createdBy, numPeers, progress, path: pathname, length, ratio,
-            ready, uploadSpeed, downloadSpeed, timeRemaining, done,
-          } = torrent;
-          const torrentName = torrent.files[0] && torrent.files[0]._torrent.name;
-          const folder = `${pathname}/${torrentName}`;
+        if (!t.paused) {
+          const torrent = client.get(t.id);
+          const torrentDate = t.date;
+          if (torrent.ready) {
+            const {
+              name, created, createdBy, numPeers, progress, path: pathname, infoHash,
+              length, magnetURI, ratio, ready, uploadSpeed, downloadSpeed, timeRemaining, done,
+            } = torrent;
+            const torrentName = torrent.files[0] && torrent.files[0]._torrent.name;
+            const folder = `${pathname}/${torrentName}`;
+            torrentsList.push({
+              name,
+              created,
+              createdBy,
+              numPeers,
+              progress,
+              folder,
+              infoHash,
+              length,
+              magnetURI,
+              ratio,
+              ready,
+              uploadSpeed,
+              downloadSpeed,
+              timeRemaining,
+              date: torrentDate,
+              done,
+              paused: false,
+            });
+          }
+        } else {
           torrentsList.push({
-            name,
-            created,
-            createdBy,
-            numPeers,
-            progress,
-            folder,
-            length,
-            ratio,
-            ready,
-            uploadSpeed,
-            downloadSpeed,
-            timeRemaining,
-            done,
+            name: t.name,
+            date: t.date,
+            length: t.length,
+            paused: true,
           });
+          areTorrentsPaused = true;
         }
       });
+    } else {
+      torrentsList = [];
     }
   } catch (error) {
     console.log('error');
   }
-  return torrentsList;
+  if (torrentsList.length === client.torrents.length && !areTorrentsPaused) return torrentsList;
+  if (areTorrentsPaused) return torrentsList;
+  return null;
 };
 
 module.exports = {

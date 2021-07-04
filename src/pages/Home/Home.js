@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-fragments */
 import React, { Fragment } from 'react';
-import { Navbar, Toolbar, Table } from '../../containers';
+import { Navbar, Toolbar, TorrentsList } from '../../containers';
 import { HomePageContainer } from './Home.styles';
 
 const Home = () => (
@@ -8,7 +8,7 @@ const Home = () => (
     <Navbar />
     <HomePageContainer>
       <Toolbar />
-      <Table />
+      <TorrentsList />
     </HomePageContainer>
   </Fragment>
 );

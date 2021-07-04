@@ -5,10 +5,13 @@ import Colors from '../../commons/Colors';
 import Vectors from '../../commons/Vectors';
 
 export const ToolbarContainer = styled.div`
-  height: 70px;
+  height: 5rem;
   max-width: 100vw;
   background-color: ${Colors.BASE_DARK2};
   padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+  border-bottom: 1px solid #3c3c3c;
 `;
 
 export const MainContentContainer = styled.div`
@@ -43,18 +46,13 @@ export const CreateTorrentButton = styled.button`
   padding: 0.5rem 1rem;
   cursor: pointer;
   transition: 0.4s;
-
   &:hover {
     background-color: ${Colors.HIGHLIGHT2};
   }
 `;
 
-export const AddTorrentIcon = styled(Vectors.addtorrentIcon)`
-  margin-right: 1rem;
-`;
-
 export const ButtonLabel = styled.span`
-  font-size: 16px;
+  font-size: 15px;
   color: ${Colors.NEUTRAL_WHITE};
 `;
 
