@@ -36,17 +36,21 @@ const recoverClient = async (client) => {
   return recoveredClient;
 };
 
-const updateTorrentOnJSON = (torrentId, path, paused) => {
+const updateTorrentOnJSON = (name, torrentId, length, path, paused, date) => {
   const dataFile = fs.readFileSync(filePath);
   let torrentsList = JSON.parse(dataFile);
   // Check if torrent already exists on JSON file
   const foundTorrent = torrentsList.some((torrent) => torrent.id === torrentId);
-  // If torrent does not exists then we add it to the JSON
-  if (!foundTorrent) torrentsList.push({ id: torrentId, path, paused });
-  // If torrent already exists then we updated it
-  else {
+  // If torrent does not exists then we add it to the JSON, else then we updated it
+  if (!foundTorrent) {
+    torrentsList.push({
+      name, id: torrentId, length, path, paused, date,
+    });
+  } else {
     torrentsList = torrentsList.filter((torrent) => torrent.id !== torrentId);
-    torrentsList.push({ id: torrentId, path, paused });
+    torrentsList.push({
+      name, id: torrentId, length, path, paused, date,
+    });
   }
   fs.writeFileSync(filePath, JSON.stringify(torrentsList));
 };

@@ -2,18 +2,16 @@ import PropTypes from 'prop-types';
 import React, { useState, useEffect, useRef } from 'react';
 import { downloadTorrent } from '../../api/torrents';
 import {
-  Dialog, Form, Title, Subtitle, Input, DownloadButton,
+  Dialog, DialogContent, Form, Title, Subtitle, Input, DownloadButton,
 } from './AddTorrentModal.styles';
 
 const AddTorrentModal = ({ setIsDialogOpen }) => {
-  const [torrentHash, setTorrentHash] = useState('');
+  const [torrentHash, setTorrentHash] = useState({ value: '' });
   const dialogRef = useRef(null);
-  const sendForm = (e) => {
+  const sendForm = async (e) => {
     e.preventDefault();
-    downloadTorrent(torrentHash);
-    setTimeout(() => {
-      setIsDialogOpen(false);
-    }, 2000);
+    await downloadTorrent(torrentHash.value);
+    setIsDialogOpen(false);
   };
 
   useEffect(() => {
@@ -32,24 +30,27 @@ const AddTorrentModal = ({ setIsDialogOpen }) => {
   }, [dialogRef]);
 
   return (
-    <Dialog ref={dialogRef}>
-      <Form onSubmit={sendForm}>
-        <Title>Add new torrent</Title>
-        <Subtitle>
-          Paste a torrent hash, magnet link or http link and Storm will
-          make the rest for you.
-        </Subtitle>
-        <Input
-          type="text"
-          autoFocus
-          id="torrent"
-          onChange={(e) => { setTorrentHash(e.target.value); }}
-          placeholder="Paste torrent hash, magnet link or http link"
-          autoComplete="off"
-          value={torrentHash}
-        />
-        <DownloadButton type="submit" value="Download" disabled={!torrentHash} />
-      </Form>
+    <Dialog>
+      <DialogContent ref={dialogRef}>
+        <Form onSubmit={sendForm}>
+          <Title>Add new torrent</Title>
+          <Subtitle>
+            Paste a torrent hash, magnet link or http link and Storm will
+            make the rest for you.
+          </Subtitle>
+          <Input
+            type="text"
+            autoFocus
+            id="torrent"
+            name="torrentHash"
+            onChange={(e) => { setTorrentHash({ value: e.target.value }); }}
+            placeholder="Paste torrent hash, magnet URI or http link"
+            autoComplete="off"
+            value={torrentHash.value}
+          />
+          <DownloadButton type="submit" value="Download" disabled={!torrentHash.value} />
+        </Form>
+      </DialogContent>
     </Dialog>
   );
 };

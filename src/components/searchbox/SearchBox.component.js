@@ -13,7 +13,7 @@ export const SearchBox = () => {
   const stormContext = useContext(StormContext);
   const inputText = useMemo(
     () => stormContext.data.torrentSearch,
-    [stormContext.data.torrentSearch]
+    [stormContext.data.torrentSearch],
   );
 
   const handleInputChange = (e) => {

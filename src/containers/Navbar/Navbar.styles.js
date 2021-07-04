@@ -6,47 +6,51 @@ import Colors from '../../commons/Colors';
 
 export const AllTorrentsIcon = styled(Vectors.allTorrents)`
   margin-right: 12px;
-  width: 15px;
+  width: 14px;
   fill: ${Colors.NEUTRAL_WHITE}
 `;
 
 export const DownloadTorrentsIcon = styled(Vectors.downloadTorrents)`
   margin-right: 12px;
-  width: 15px;
+  width: 14px;
   fill: ${Colors.NEUTRAL_WHITE}
 `;
 
 export const PauseTorrentsIcon = styled(Vectors.pauseTorrents)`
   margin-right: 12px;
-  width: 15px;
+  width: 14px;
   fill: ${Colors.NEUTRAL_WHITE}
 `;
 
 export const SeedingTorrentsIcon = styled(Vectors.seedingTorrents)`
   margin-right: 12px;
-  width: 15px;
+  width: 14px;
   fill: ${Colors.NEUTRAL_WHITE}
 `;
 
 export const CompletedTorrentsIcon = styled(Vectors.completedTorrents)`
   margin-right: 12px;
-  width: 15px;
+  width: 14px;
   stroke: ${Colors.NEUTRAL_WHITE}
 `;
 
 export const StatusTextContent = styled.span`
   color: ${Colors.NEUTRAL_WHITE};
-  font-size: 16px;
+  font-size: 14px;
 `;
 
 export const NavBarContentContainer = styled.div`
+  position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   height: 100vh;
-  min-width: 250px;
+  min-width: 15%;
+  border-right: 1px solid #3c3c3c;
   background-color: ${Colors.BASE_DARK2};
+  z-index: 1;
+  margin-top: 4rem;
 `;
 
 export const ListContainer = styled.div`
@@ -87,7 +91,7 @@ export const StatusButton = styled.button`
   text-align: left;
   width: 100%;
   border-radius: 4px;
-  margin: 8px 0;
+  margin: 6px 0;
   padding: 0.5rem 1rem;
   z-index: 10;
   transition: 0.3s;
@@ -116,7 +120,7 @@ export const CategoryButton = styled.button`
 
 export const TitleTextContent = styled.span`
   color: ${Colors.BASE_DARK4};
-  font-size: 14px;
+  font-size: 13px;
   margin-bottom: 1rem;
 `;
 

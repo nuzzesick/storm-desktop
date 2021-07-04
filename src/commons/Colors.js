@@ -1,6 +1,6 @@
 const Colors = {
-  BASE_DARK1: '#161B26',
-  BASE_DARK2: '#191F28',
+  BASE_DARK1: '#191919',
+  BASE_DARK2: '#131313',
   BASE_DARK3: '#727272',
   BASE_DARK4: '#BFBFBF',
   BASE_DARK5: '#545454',
@@ -26,6 +26,7 @@ const Colors = {
   DISABLED_TEXT: '#696969',
 
   PROGRESS_BAR: '#30353e',
+  PROGRESS_BAR_GRADIENT: '#214ec3',
 };
 
 export default Colors;

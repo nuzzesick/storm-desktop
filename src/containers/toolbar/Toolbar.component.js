@@ -13,7 +13,6 @@ import {
   AddTorrentButtonContainer,
   CreateTorrentButton,
   ButtonLabel,
-  AddTorrentIcon,
   SettingsIcon,
   PlayIcon,
   PauseIcon,
@@ -55,8 +54,7 @@ export const Toolbar = () => {
           <MainContentContainer>
             <ContentContainer>
               <AddTorrentButtonContainer onClick={() => setIsDialogOpen(true)}>
-                <AddTorrentIcon />
-                <ButtonLabel>Add new torrent</ButtonLabel>
+                <ButtonLabel>+ Add new torrent</ButtonLabel>
               </AddTorrentButtonContainer>
               <CreateTorrentButton>
                 <ButtonLabel>Create torrent</ButtonLabel>
