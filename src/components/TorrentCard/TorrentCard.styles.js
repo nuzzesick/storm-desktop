@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Colors from '../../commons/Colors';
 
-export const Card = styled.div`
+export const Card = styled.button`
   display: flex;
   flex-direction: column;
   border: 1px solid #3c3c3c;
@@ -11,9 +11,23 @@ export const Card = styled.div`
   color: ${Colors.NEUTRAL_WHITE};
   cursor: pointer;
   margin-bottom: 1rem;
+  align-items: initial;
+  text-align: left;
   &:hover {
     background-color: #0e0e0e;
   }
+  &:focus {
+    outline: 0;
+    border: 1px solid ${Colors.HIGHLIGHT1};
+    background-color: #0e0e0e;
+  }
+  ${({ active }) => active && `
+    background-color: #0e0e0e;
+    border: 1px solid ${Colors.HIGHLIGHT1};
+  `}
+  ${({ hidden }) => hidden && `
+    display: none;
+  `}
 `;
 
 export const TopContent = styled.div`
@@ -31,19 +45,19 @@ export const MainInfoContent = styled.div`
 export const TorrentName = styled.div`
   font-weight: 600;
   font-size: 1.05rem;
-  width: 12rem;
+  width: 18rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   margin-bottom: 0.6rem;
   @media (min-width: 1100px) {
-    width: 16rem;
+    width: 20rem;
   }
   @media (min-width: 1700px) {
-    width: 18rem;
+    width: 22rem;
   }
   @media (min-width: 2100px) {
-    width: 22rem;
+    width: 24rem;
   }
 `;
 

@@ -28,8 +28,8 @@ export const SearchBox = () => {
   return (
     <SearchBoxContainer>
       <SearchIcon />
-      <TextInput onChange={handleInputChange} value={inputText} />
-      {inputText !== '' && <ClearInputIcon onClick={clearInputText} />}
+      <TextInput onChange={handleInputChange} placeholder="Search torrents" value={inputText} />
+      <ClearInputIcon type="button" hidden={inputText === ''} onClick={clearInputText} />
     </SearchBoxContainer>
   );
 };

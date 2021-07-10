@@ -35,7 +35,7 @@ const AddTorrentModal = ({ setIsDialogOpen }) => {
         <Form onSubmit={sendForm}>
           <Title>Add new torrent</Title>
           <Subtitle>
-            Paste a torrent hash, magnet link or http link and Storm will
+            Paste a torrent hash, magnet URI or HTTP link and Storm will
             make the rest for you.
           </Subtitle>
           <Input
@@ -44,7 +44,7 @@ const AddTorrentModal = ({ setIsDialogOpen }) => {
             id="torrent"
             name="torrentHash"
             onChange={(e) => { setTorrentHash({ value: e.target.value }); }}
-            placeholder="Paste torrent hash, magnet URI or http link"
+            placeholder="Paste torrent hash, magnet URI or HTTP link"
             autoComplete="off"
             value={torrentHash.value}
           />

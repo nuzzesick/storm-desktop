@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useContext } from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import dayjs from 'dayjs';
+import StormContext from '../../context/Storm.context';
 import Colors from '../../commons/Colors';
 import { formatBytes, msToTime } from '../../utils';
 import {
@@ -25,59 +26,71 @@ const relativeTime = require('dayjs/plugin/relativeTime');
 
 dayjs.extend(relativeTime);
 
-const circularStyles = {
-  path: {
-    stroke: Colors.HIGHLIGHT1,
-  },
-  text: {
-    fill: 'white',
-    fontSize: '1.8rem',
-    fontWeight: 'bold',
-  },
-};
+const TorrentCard = ({ torrent }) => {
+  const {
+    data: { torrentSelected },
+    actions: { updateTorrentSelected },
+  } = useContext(StormContext);
+  const circularStyles = {
+    path: {
+      stroke: !torrent.paused ? Colors.HIGHLIGHT1 : Colors.BASE_DARK5,
+    },
+    text: {
+      fill: 'white',
+      fontSize: '1.8rem',
+      fontWeight: 'bold',
+    },
+  };
 
-const TorrentCard = ({ torrent }) => (
-  <Card>
-    <TopContent>
-      <MainInfoContent>
-        <TorrentName>{torrent.name}</TorrentName>
-        {
-          torrent.paused ? (
-            <ProgressText>Paused</ProgressText>
-          ) : (
-            <ProgressText>{torrent.done ? 'Completed' : `${msToTime(torrent.timeRemaining)} remaining`}</ProgressText>
-          )
-        }
-      </MainInfoContent>
-      {
-        !torrent.paused && (
-          <ProgressBarContainer>
-            <CircularProgressbar
-              value={calcPercentage(torrent.progress)}
-              text={calcPercentage(torrent.progress)}
-              styles={circularStyles}
-            />
-          </ProgressBarContainer>
-        )
-      }
-    </TopContent>
-    <BottomContent>
-      <TorrentInfoContainer>
-        <TorrentInfo>
+  return (
+    <Card
+      type="button"
+      active={torrentSelected && torrentSelected.id === torrent.id}
+      hidden={torrent.hidden}
+      onClick={() => { updateTorrentSelected(torrent); }}
+    >
+      <TopContent>
+        <MainInfoContent>
+          <TorrentName>{torrent.name}</TorrentName>
           {
-            !torrent.paused && `Peers: ${torrent.numPeers} | `
+            torrent.paused ? (
+              <ProgressText>Paused</ProgressText>
+            ) : (
+              <ProgressText>
+                {
+                  torrent.done ? 'Completed' : `${msToTime(torrent.timeRemaining)} remaining`
+                }
+              </ProgressText>
+            )
           }
-          Size:&nbsp;
-          {formatBytes(torrent.length)}
-        </TorrentInfo>
-      </TorrentInfoContainer>
-      <DateText>{`Updated ${dayjs(torrent.date).from()}`}</DateText>
-    </BottomContent>
-  </Card>
-);
+        </MainInfoContent>
+        <ProgressBarContainer>
+          <CircularProgressbar
+            value={calcPercentage(torrent.progress)}
+            text={calcPercentage(torrent.progress)}
+            styles={circularStyles}
+          />
+        </ProgressBarContainer>
+      </TopContent>
+      <BottomContent>
+        <TorrentInfoContainer>
+          <TorrentInfo>
+            {
+              !torrent.paused && `Peers: ${torrent.numPeers} | `
+            }
+            Size:&nbsp;
+            {formatBytes(torrent.length)}
+          </TorrentInfo>
+        </TorrentInfoContainer>
+        <DateText>{`Updated ${dayjs(torrent.date).from()}`}</DateText>
+      </BottomContent>
+    </Card>
+  );
+};
 
 TorrentCard.propTypes = {
   torrent: PropTypes.shape({
+    id: PropTypes.string,
     name: PropTypes.string,
     progress: PropTypes.number,
     done: PropTypes.bool,
@@ -86,6 +99,7 @@ TorrentCard.propTypes = {
     date: PropTypes.string,
     length: PropTypes.number,
     paused: PropTypes.bool,
+    hidden: PropTypes.bool,
   }).isRequired,
 };
 

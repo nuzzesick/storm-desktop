@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 const fs = require('fs');
 const WebTorrent = require('webtorrent');
+// const createATorrent = require('create-torrent');
 const {
   filePath,
   recoverClient,
@@ -20,11 +21,10 @@ recoverClient(WebTorrentClient)
 
 const downloadTorrent = (req, res, next) => {
   try {
-    const { id: torrentId } = req.query;
-    const { path } = req.body;
+    const { id: torrentId, path } = req.body;
     client.add(torrentId, { path: path || 'downloads' }, (t) => {
       const date = new Date();
-      updateTorrentOnJSON(t.name, torrentId, t.length, path || 'downloads', false, date);
+      updateTorrentOnJSON(t.name, t.magnetURI, t.length, path || 'downloads', false, date, t.done, t.progress);
       res.status(200);
       res.json({
         status: 'ok',
@@ -38,42 +38,9 @@ const downloadTorrent = (req, res, next) => {
   }
 };
 
-const getInfo = (req, res, next) => {
-  try {
-    const { id: torrentId } = req.query;
-    const torrent = client.get(torrentId);
-    const {
-      name, created, createdBy, numPeers, progress, path: pathname, length, ratio,
-      ready, uploadSpeed, downloadSpeed, timeRemaining, done,
-    } = torrent;
-    const torrentName = torrent.files[0]._torrent.name;
-    const folder = `${pathname}/${torrentName}`;
-    res.status(200);
-    res.json({
-      name,
-      created,
-      createdBy,
-      numPeers,
-      progress,
-      folder,
-      length,
-      ratio,
-      ready,
-      uploadSpeed,
-      downloadSpeed,
-      timeRemaining,
-      done,
-    });
-    next();
-  } catch (error) {
-    console.log(error);
-    next();
-  }
-};
-
 const deleteTorrent = (req, res, next) => {
   try {
-    const { id: torrentId } = req.query;
+    const { id: torrentId } = req.body;
     client.remove(torrentId, () => {
       deleteTorrentFromJSON(torrentId);
       res.status(200);
@@ -103,7 +70,7 @@ const deleteTorrentAndFiles = (req, res, next) => {
     });
   };
   try {
-    const { id: torrentId } = req.query;
+    const { id: torrentId } = req.body;
     const torrent = client.get(torrentId);
     let folder;
     if (!torrent) {
@@ -138,12 +105,21 @@ const deleteTorrentAndFiles = (req, res, next) => {
 
 const pauseTorrent = (req, res, next) => {
   try {
-    const { id: torrentId } = req.query;
+    const { id: torrentId } = req.body;
     const torrent = client.get(torrentId);
-    const { path } = torrent;
+    const { progress, done, path } = torrent;
     client.remove(torrentId, (t) => {
       const date = new Date();
-      updateTorrentOnJSON(t.name, torrentId, t.length, path, true, date);
+      updateTorrentOnJSON(
+        torrent.name,
+        torrent.magnetURI,
+        torrent.length,
+        path,
+        true,
+        date,
+        done,
+        progress,
+      );
       res.status(200);
       res.json({
         status: 'ok',
@@ -151,6 +127,16 @@ const pauseTorrent = (req, res, next) => {
       });
       next();
     });
+  } catch (error) {
+    console.log(error);
+    next();
+  }
+};
+
+const createTorrent = (req, res, next) => {
+  try {
+    const { file } = req.body;
+    // To do
   } catch (error) {
     console.log(error);
     next();
@@ -197,10 +183,13 @@ const getAllTorrents = () => {
           }
         } else {
           torrentsList.push({
+            id: t.id,
             name: t.name,
             date: t.date,
             length: t.length,
             paused: true,
+            done: t.done,
+            progress: t.progress,
           });
           areTorrentsPaused = true;
         }
@@ -217,5 +206,10 @@ const getAllTorrents = () => {
 };
 
 module.exports = {
-  downloadTorrent, getInfo, deleteTorrent, deleteTorrentAndFiles, pauseTorrent, getAllTorrents,
+  downloadTorrent,
+  deleteTorrent,
+  deleteTorrentAndFiles,
+  pauseTorrent,
+  createTorrent,
+  getAllTorrents,
 };

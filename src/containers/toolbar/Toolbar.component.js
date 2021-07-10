@@ -1,5 +1,6 @@
+import PropTypes from 'prop-types';
 import React, {
-  useContext, useMemo, Fragment, useState,
+  useContext, useState,
 } from 'react';
 
 import { SearchBox } from '../../components/SearchBox/SearchBox.component';
@@ -7,47 +8,80 @@ import { SearchBox } from '../../components/SearchBox/SearchBox.component';
 import StormContext from '../../context/Storm.context';
 
 import {
+  deleteTorrent, deleteTorrentAndFiles, downloadTorrent, pauseTorrent,
+} from '../../api/torrents';
+
+import {
   ToolbarContainer,
   MainContentContainer,
   ContentContainer,
   AddTorrentButtonContainer,
-  CreateTorrentButton,
+  // CreateTorrentButton,
   ButtonLabel,
-  SettingsIcon,
+  // SettingsIcon,
   PlayIcon,
   PauseIcon,
   DeleteTorrentIcon,
   TorrentActionsButton,
   TorrentActionsContainer,
+  TorrentName,
 } from './Toolbar.styles';
 import AddTorrentModal from '../../components/AddTorrentModal/AddTorrentModal.component';
 
-export const Toolbar = () => {
+export const Toolbar = ({ setActiveFilter }) => {
   const stormContext = useContext(StormContext);
 
-  const isTorrentSelected = useMemo(
-    () => stormContext.data.isTorrentSelected,
-    [stormContext.data.isTorrentSelected],
-  );
+  const { data: { torrentSelected }, actions: { clearTorrentSelection } } = stormContext;
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+  const handleTorrent = async () => {
+    if (torrentSelected.paused) {
+      await downloadTorrent(torrentSelected.id);
+    } else {
+      await pauseTorrent(torrentSelected.magnetURI);
+    }
+    clearTorrentSelection();
+  };
+
+  const handleTorrentDeletion = async (files) => {
+    if (files) {
+      await deleteTorrentAndFiles(torrentSelected.magnetURI || torrentSelected.id);
+    } else {
+      await deleteTorrent(torrentSelected.magnetURI || torrentSelected.id);
+    }
+    clearTorrentSelection();
+  };
+
   return (
     <ToolbarContainer>
-      {isTorrentSelected ? (
+      {torrentSelected ? (
         <MainContentContainer>
           <TorrentActionsContainer>
-            <TorrentActionsButton>
-              <PlayIcon />
+            <TorrentName>{torrentSelected.name}</TorrentName>
+            <TorrentActionsButton onClick={handleTorrent}>
+              {
+                torrentSelected.paused ? (
+                  <>
+                    <PlayIcon />
+                    {torrentSelected.done ? 'Seed' : 'Resume'}
+                  </>
+                ) : (
+                  <>
+                    <PauseIcon />
+                    Pause
+                  </>
+                )
+              }
             </TorrentActionsButton>
-            <TorrentActionsButton>
-              <PauseIcon />
-            </TorrentActionsButton>
-            <TorrentActionsButton>
+            <TorrentActionsButton
+              onClick={() => { handleTorrentDeletion(true); }}
+            >
               <DeleteTorrentIcon />
+              Delete
             </TorrentActionsButton>
           </TorrentActionsContainer>
-          <SettingsIcon />
+          {/* <SettingsIcon /> */}
         </MainContentContainer>
       ) : (
         <>
@@ -56,13 +90,13 @@ export const Toolbar = () => {
               <AddTorrentButtonContainer onClick={() => setIsDialogOpen(true)}>
                 <ButtonLabel>+ Add new torrent</ButtonLabel>
               </AddTorrentButtonContainer>
-              <CreateTorrentButton>
+              {/* <CreateTorrentButton>
                 <ButtonLabel>Create torrent</ButtonLabel>
-              </CreateTorrentButton>
+              </CreateTorrentButton> */}
             </ContentContainer>
             <ContentContainer>
-              <SearchBox />
-              <SettingsIcon />
+              <SearchBox setActiveFilter={setActiveFilter} />
+              {/* <SettingsIcon /> */}
             </ContentContainer>
           </MainContentContainer>
           {
@@ -73,6 +107,10 @@ export const Toolbar = () => {
       )}
     </ToolbarContainer>
   );
+};
+
+Toolbar.propTypes = {
+  setActiveFilter: PropTypes.func.isRequired,
 };
 
 export default Toolbar;
