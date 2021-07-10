@@ -64,15 +64,17 @@ export const SettingsIcon = styled(Vectors.settingsIcon)`
   fill: ${Colors.NEUTRAL_WHITE};
 `;
 
-export const PlayIcon = styled(Vectors.playIcon)``;
+export const PlayIcon = styled(Vectors.playIcon)`
+  width: 1rem;
+`;
 
 export const PauseIcon = styled(Vectors.pauseTorrents)`
-  width: 32px;
+  width: 0.7rem;
   fill: ${Colors.NEUTRAL_WHITE};
 `;
 
 export const DeleteTorrentIcon = styled(Vectors.deleteIcon)`
-  width: 32px;
+  width: 1rem;
   stroke: ${Colors.NEUTRAL_WHITE};
 `;
 
@@ -87,7 +89,6 @@ export const TorrentActionsButton = styled.button`
   color: white;
   font-size: 0.9rem;
   svg {
-    width: 1.2rem;
     margin-right: 0.4rem;
   }
   &:hover {

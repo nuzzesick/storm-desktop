@@ -7,9 +7,7 @@ import { SearchBox } from '../../components/SearchBox/SearchBox.component';
 
 import StormContext from '../../context/Storm.context';
 
-import {
-  deleteTorrent, deleteTorrentAndFiles, downloadTorrent, pauseTorrent,
-} from '../../api/torrents';
+import { downloadTorrent, pauseTorrent } from '../../api/torrents';
 
 import {
   ToolbarContainer,
@@ -27,6 +25,7 @@ import {
   TorrentName,
 } from './Toolbar.styles';
 import AddTorrentModal from '../../components/AddTorrentModal/AddTorrentModal.component';
+import RemoveTorrentModal from '../../components/RemoveTorrentModal/RemoveTorrentModal.component';
 
 export const Toolbar = ({ setActiveFilter }) => {
   const stormContext = useContext(StormContext);
@@ -34,6 +33,8 @@ export const Toolbar = ({ setActiveFilter }) => {
   const { data: { torrentSelected }, actions: { clearTorrentSelection } } = stormContext;
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const [isRemoveDialogOpen, setIsRemoveDialogOpen] = useState(false);
 
   const handleTorrent = async () => {
     if (torrentSelected.paused) {
@@ -44,45 +45,42 @@ export const Toolbar = ({ setActiveFilter }) => {
     clearTorrentSelection();
   };
 
-  const handleTorrentDeletion = async (files) => {
-    if (files) {
-      await deleteTorrentAndFiles(torrentSelected.magnetURI || torrentSelected.id);
-    } else {
-      await deleteTorrent(torrentSelected.magnetURI || torrentSelected.id);
-    }
-    clearTorrentSelection();
-  };
-
   return (
     <ToolbarContainer>
       {torrentSelected ? (
-        <MainContentContainer>
-          <TorrentActionsContainer>
-            <TorrentName>{torrentSelected.name}</TorrentName>
-            <TorrentActionsButton onClick={handleTorrent}>
-              {
-                torrentSelected.paused ? (
-                  <>
-                    <PlayIcon />
-                    {torrentSelected.done ? 'Seed' : 'Resume'}
-                  </>
-                ) : (
-                  <>
-                    <PauseIcon />
-                    Pause
-                  </>
-                )
-              }
-            </TorrentActionsButton>
-            <TorrentActionsButton
-              onClick={() => { handleTorrentDeletion(true); }}
-            >
-              <DeleteTorrentIcon />
-              Delete
-            </TorrentActionsButton>
-          </TorrentActionsContainer>
-          {/* <SettingsIcon /> */}
-        </MainContentContainer>
+        <>
+          <MainContentContainer>
+            <TorrentActionsContainer>
+              <TorrentName>{torrentSelected.name}</TorrentName>
+              <TorrentActionsButton onClick={handleTorrent}>
+                {
+                  torrentSelected.paused ? (
+                    <>
+                      <PlayIcon />
+                      {torrentSelected.done ? 'Seed' : 'Resume'}
+                    </>
+                  ) : (
+                    <>
+                      <PauseIcon />
+                      Pause
+                    </>
+                  )
+                }
+              </TorrentActionsButton>
+              <TorrentActionsButton
+                onClick={() => { setIsRemoveDialogOpen(true); }}
+              >
+                <DeleteTorrentIcon />
+                Delete
+              </TorrentActionsButton>
+            </TorrentActionsContainer>
+            {/* <SettingsIcon /> */}
+          </MainContentContainer>
+          {
+          isRemoveDialogOpen
+            && <RemoveTorrentModal setIsRemoveDialogOpen={setIsRemoveDialogOpen} />
+        }
+        </>
       ) : (
         <>
           <MainContentContainer>
