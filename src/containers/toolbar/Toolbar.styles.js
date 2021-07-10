@@ -6,7 +6,7 @@ import Vectors from '../../commons/Vectors';
 
 export const ToolbarContainer = styled.div`
   height: 5rem;
-  max-width: 100vw;
+  width: 100%;
   background-color: ${Colors.BASE_DARK2};
   padding: 0 2rem;
   position: relative;
@@ -52,7 +52,7 @@ export const CreateTorrentButton = styled.button`
 `;
 
 export const ButtonLabel = styled.span`
-  font-size: 15px;
+  font-size: 0.9rem;
   color: ${Colors.NEUTRAL_WHITE};
 `;
 
@@ -77,12 +77,46 @@ export const DeleteTorrentIcon = styled(Vectors.deleteIcon)`
 `;
 
 export const TorrentActionsButton = styled.button`
-  margin: 0 1rem;
+  display: flex;
+  align-items: center;
+  padding: 0.4rem 1rem;
   cursor: pointer;
+  margin-right: 0.6rem;
+  border-radius: 4px;
+  transition: 0.4s;
+  color: white;
+  font-size: 0.9rem;
+  svg {
+    width: 1.2rem;
+    margin-right: 0.4rem;
+  }
+  &:hover {
+    background-color: ${Colors.HIGHLIGHT2};
+  }
 `;
 
 export const TorrentActionsContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const TorrentName = styled.p`
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: white;
+  margin-right: 1rem;
+  max-width: 18rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  @media (min-width: 1100px) {
+    max-width: 20rem;
+  }
+  @media (min-width: 1700px) {
+    width: 22rem;
+  }
+  @media (min-width: 2100px) {
+    max-width: 24rem;
+  }
 `;

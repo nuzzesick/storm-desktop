@@ -4,13 +4,14 @@ export const defaultValue = {
   data: {
     darkThemeIsActive: true,
     torrentsList: null,
-    isTorrentSelected: false,
+    torrentSelected: null,
     torrentSearch: '',
   },
   actions: {
     updateAppTheme: () => undefined,
-    updateIsTorrentSelected: () => undefined,
+    updateTorrentSelected: () => undefined,
     updateTorrentSearch: () => undefined,
+    clearTorrentSelection: () => undefined,
   },
 };
 

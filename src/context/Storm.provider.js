@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import io from 'socket.io-client';
@@ -13,36 +14,56 @@ setInterval(() => {
 const StormProvider = ({ children }) => {
   const [darkThemeIsActive, setDarkThemeIsActive] = useState(true);
   const [torrentsList, setTorrentsList] = useState(null);
-  const [isTorrentSelected, setIsTorrentSelected] = useState(false);
+  const [torrentSelected, setTorrentSelected] = useState(null);
   const [torrentSearch, setTorrentSearch] = useState('');
 
   const updateAppTheme = () => {
     setDarkThemeIsActive(!darkThemeIsActive);
   };
 
-  socket.on('return:list', (list) => {
-    setTorrentsList(list);
-  });
+  React.useEffect(() => {
+    if (torrentSearch === '') {
+      socket.on('return:list', (list) => {
+        setTorrentsList(list);
+      });
+    } else {
+      socket.off();
+    }
+  }, [torrentSearch]);
 
-  const updateIsTorrentSelected = () => {
-    setIsTorrentSelected(!isTorrentSelected);
+  const updateTorrentSelected = (value) => {
+    setTorrentSelected(value);
+  };
+
+  const clearTorrentSelection = () => {
+    setTorrentSelected(false);
   };
 
   const updateTorrentSearch = (value) => {
     setTorrentSearch(value);
+    const searchText = value.toUpperCase();
+    const wordsMatch = (word) => word.name.toUpperCase().indexOf(searchText) > -1;
+    torrentsList.forEach((torrent) => {
+      if (wordsMatch(torrent)) {
+        torrent.hidden = false;
+      } else {
+        torrent.hidden = true;
+      }
+    });
   };
 
   const providerValue = {
     data: {
       darkThemeIsActive,
       torrentsList,
-      isTorrentSelected,
+      torrentSelected,
       torrentSearch,
     },
     actions: {
       updateAppTheme,
-      updateIsTorrentSelected,
+      updateTorrentSelected,
       updateTorrentSearch,
+      clearTorrentSelection,
     },
   };
 

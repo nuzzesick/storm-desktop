@@ -7,12 +7,20 @@ const socketio = require('socket.io');
 require('events').EventEmitter.prototype._maxListeners = 100;
 // Routes
 const {
-  DOWNLOAD_TORRENT_ROUTE, GET_INFO_TORRENT_ROUTE,
-  DELETE_TORRENT_ROUTE, DELETE_TORRENT_AND_FILES_ROUTE, PAUSE_TORRENT,
+  DOWNLOAD_TORRENT_ROUTE,
+  DELETE_TORRENT_ROUTE,
+  DELETE_TORRENT_AND_FILES_ROUTE,
+  PAUSE_TORRENT,
+  CREATE_TORRENT,
 } = require('./routes/torrent');
   // Controllers
 const {
-  downloadTorrent, getInfo, deleteTorrent, deleteTorrentAndFiles, pauseTorrent, getAllTorrents,
+  downloadTorrent,
+  deleteTorrent,
+  deleteTorrentAndFiles,
+  pauseTorrent,
+  getAllTorrents,
+  createTorrent,
 } = require('./controllers/torrent');
 
 const app = express();
@@ -36,13 +44,13 @@ const server = () => {
 
   app.post(DOWNLOAD_TORRENT_ROUTE, downloadTorrent);
 
-  app.get(GET_INFO_TORRENT_ROUTE, getInfo);
+  app.post(DELETE_TORRENT_ROUTE, deleteTorrent);
 
-  app.get(DELETE_TORRENT_ROUTE, deleteTorrent);
+  app.post(DELETE_TORRENT_AND_FILES_ROUTE, deleteTorrentAndFiles);
 
-  app.get(DELETE_TORRENT_AND_FILES_ROUTE, deleteTorrentAndFiles);
+  app.post(PAUSE_TORRENT, pauseTorrent);
 
-  app.get(PAUSE_TORRENT, pauseTorrent);
+  app.post(CREATE_TORRENT, createTorrent);
 
   io.on('connection', (socket) => {
     socket.on('get:list', () => {

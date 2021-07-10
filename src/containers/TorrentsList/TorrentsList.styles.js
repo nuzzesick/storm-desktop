@@ -5,10 +5,8 @@ import Colors from '../../commons/Colors';
 export const AppContent = styled.div`
   position: relative;
   background: ${Colors.BASE_DARK1};
-  position: relative;
   width: 75%;
-  background: #191919;
-  margin: 2rem 15%;
+  margin: 16vh 15%;
 `;
 
 export const TorrentsGrid = styled.div`

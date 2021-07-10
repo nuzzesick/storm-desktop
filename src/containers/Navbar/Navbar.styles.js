@@ -43,14 +43,13 @@ export const NavBarContentContainer = styled.div`
   position: fixed;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   align-items: center;
   height: 100vh;
   min-width: 15%;
   border-right: 1px solid #3c3c3c;
   background-color: ${Colors.BASE_DARK2};
   z-index: 1;
-  margin-top: 4rem;
+  padding-top: 8rem;
 `;
 
 export const ListContainer = styled.div`
@@ -96,12 +95,14 @@ export const StatusButton = styled.button`
   z-index: 10;
   transition: 0.3s;
   cursor: pointer;
+  background-color: transparent;
   &:hover {
     background-color: ${Colors.HIGHLIGHT1};
   }
-  ${({ active }) => active && `
-    background-color: ${Colors.HIGHLIGHT1};
-  `}
+`;
+
+export const StatusButtonActive = styled(StatusButton)`
+  background-color: ${Colors.HIGHLIGHT1};
 `;
 
 export const CategoryButton = styled.button`
