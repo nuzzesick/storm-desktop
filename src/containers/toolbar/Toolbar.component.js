@@ -2,13 +2,10 @@ import PropTypes from 'prop-types';
 import React, {
   useContext, useState,
 } from 'react';
-
+import io from 'socket.io-client';
 import { SearchBox } from '../../components/SearchBox/SearchBox.component';
-
 import StormContext from '../../context/Storm.context';
-
 import { downloadTorrent, pauseTorrent } from '../../api/torrents';
-
 import {
   ToolbarContainer,
   MainContentContainer,
@@ -30,11 +27,16 @@ import RemoveTorrentModal from '../../components/RemoveTorrentModal/RemoveTorren
 export const Toolbar = ({ setActiveFilter }) => {
   const stormContext = useContext(StormContext);
 
-  const { data: { torrentSelected }, actions: { clearTorrentSelection } } = stormContext;
+  const { data: { torrentSelected, socket }, actions: { clearTorrentSelection } } = stormContext;
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const [isRemoveDialogOpen, setIsRemoveDialogOpen] = useState(false);
+
+  socket.on('new-torrent', () => {
+    setIsDialogOpen(true);
+    socket.off();
+  });
 
   const handleTorrent = async () => {
     if (torrentSelected.paused) {

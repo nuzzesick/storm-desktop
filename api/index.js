@@ -1,8 +1,6 @@
 // Server
 const express = require('express');
-const httpServer = require('http');
 const cors = require('cors');
-const socketio = require('socket.io');
 // eslint-disable-next-line no-underscore-dangle
 require('events').EventEmitter.prototype._maxListeners = 100;
 // Routes
@@ -27,17 +25,8 @@ const app = express();
 
 // Ports
 const port = 8000;
-const socketPort = 8001;
 
-const http = httpServer.Server().listen(socketPort);
-
-const io = socketio(http, {
-  cors: {
-    methods: ['GET', 'POST'],
-  },
-});
-
-const server = () => {
+const server = (io) => {
   app.use(express.json());
 
   app.use(cors());

@@ -25,4 +25,4 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-data/data.json
+api/data/data.json

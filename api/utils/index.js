@@ -1,23 +1,11 @@
 const fs = require('fs');
-const pathFunc = require('path');
+const path = require('path');
 
 // File where all the torrents (as an array) will be stored
-const folder = '../../data/';
-const filePath = './data/data.json';
-
-const getDataFolder = () => new Promise((resolve, reject) => {
-  if (!fs.existsSync(folder)) {
-    fs.mkdir(pathFunc.join(__dirname, folder), (err) => {
-      if (err) reject(err);
-      resolve();
-    });
-  }
-  resolve();
-});
+const filePath = path.join(__dirname, 'data.json');
 
 const recoverClient = async (client) => {
   const recoveredClient = client;
-  await getDataFolder();
   // Create the file if it does not exists
   if (!fs.existsSync(filePath)) {
     fs.writeFileSync(filePath, JSON.stringify([]));
@@ -69,9 +57,7 @@ const getTorrentOnJSON = (torrentId) => {
 };
 
 module.exports = {
-  folder,
   filePath,
-  getDataFolder,
   recoverClient,
   updateTorrentOnJSON,
   deleteTorrentFromJSON,
