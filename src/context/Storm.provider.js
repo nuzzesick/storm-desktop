@@ -58,6 +58,7 @@ const StormProvider = ({ children }) => {
       torrentsList,
       torrentSelected,
       torrentSearch,
+      socket,
     },
     actions: {
       updateAppTheme,

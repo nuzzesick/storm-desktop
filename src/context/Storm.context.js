@@ -6,6 +6,7 @@ export const defaultValue = {
     torrentsList: null,
     torrentSelected: null,
     torrentSearch: '',
+    socket: null,
   },
   actions: {
     updateAppTheme: () => undefined,
