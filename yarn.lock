@@ -15001,10 +15001,10 @@ websocket-extensions@>=0.1.1:
   resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.4.tgz#7f8473bc839dfd87608adb95d7eb075211578a42"
   integrity sha512-OqedPIGOfsDlo31UNwYbCFMSaO9m9G/0faIHj5/dZFDMFqPTcx6UwqyOy3COEaEOg/9VsGIpdqn62W5KhoKSpg==
 
-webtorrent@^1.0.0:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/webtorrent/-/webtorrent-1.2.2.tgz#30d906e7775756453d74980f8d7fcaa0bd3c22e5"
-  integrity sha512-1pM8HsB4WG1MBRV7retGf6AtMQ5osngMvA6x/kUEGfqhQTAJXaBjqEOW19+48H0UbC9PtQuvSDHDDrNcjuzXDA==
+webtorrent@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/webtorrent/-/webtorrent-1.2.3.tgz#3baa396a3163bace27bd11a066f0f498fc0f4d39"
+  integrity sha512-qNkv8QUw9C+7pIPxmSp/nEPqUTijtmFKLLkPUVh5gTvR03QgGUq/D7ozcqK0Lnvk/VkvmpRchSJIiHh3+KQqeQ==
   dependencies:
     addr-to-ip-port "^1.5.1"
     bitfield "^4.0.0"

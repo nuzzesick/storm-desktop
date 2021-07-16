@@ -4,7 +4,7 @@ const pathSystem = require('path');
 // File where all the torrents (as an array) will be stored
 const filePath = pathSystem.join(__dirname, '../../data.json');
 
-const recoverClient = async (client) => {
+const recoverClient = (client) => {
   const recoveredClient = client;
   // Create the file if it does not exists
   if (!fs.existsSync(filePath)) {

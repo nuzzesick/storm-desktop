@@ -11,6 +11,7 @@ downloads
 
 # production
 /build
+/out
 
 # misc
 .env
@@ -25,4 +26,4 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-api/data/data.json
+data.json

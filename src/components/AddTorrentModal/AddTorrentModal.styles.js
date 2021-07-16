@@ -73,6 +73,27 @@ export const Input = styled.input`
   }
 `;
 
+export const SelectFolder = styled.input`
+  background: transparent;
+  width: 75%;
+  padding: 0.4rem 1.2rem;
+  font-size: 12px;
+  font-weight: 500;
+  color: ${Colors.NEUTRAL_WHITE};
+  transition: 0.4s;
+  border-radius: 3px;
+  border: 2px solid ${Colors.INPUT_DARK1};
+  margin: 1rem 0;
+  cursor: pointer;
+  &:hover {
+    background: ${Colors.INPUT_DARK1};
+  }
+  &:focus {
+    background: transparent;
+    border: 2px solid ${Colors.INPUT_DARK1};
+  }
+`;
+
 export const DownloadButton = styled.input`
   display: flex;
   margin-top: 0.6rem;
