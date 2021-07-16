@@ -9,6 +9,7 @@ const {
   updateTorrentOnJSON,
   deleteTorrentFromJSON,
   getTorrentOnJSON,
+  returnJSON,
 } = require('../utils');
 
 const WebTorrentClient = new WebTorrent();
@@ -16,32 +17,20 @@ const WebTorrentClient = new WebTorrent();
 const client = recoverClient(WebTorrentClient);
 
 const downloadTorrent = (req, res, next) => {
-  try {
-    const { id: torrentId, path } = req.body;
-    const torrentExists = client.get(torrentId);
-    if (!torrentExists) {
-      client.add(torrentId, { path }, (t) => {
-        const date = new Date();
-        updateTorrentOnJSON(t.name, t.magnetURI, t.length, path, false, date, t.done, t.progress);
-        res.status(200);
-        res.json({
-          status: 'ok',
-          message: 'Torrent downloading',
-        });
-        next();
-      });
-    } else {
-      res.status(400);
-      res.json({
-        status: 'error',
-        message: 'Torrent already exists',
-      });
-      next();
-    }
-  } catch (error) {
-    console.log(error);
-    next();
+  const { id: torrentId, path } = req.body;
+  const torrentWasAdded = client.get(torrentId);
+  if (!torrentWasAdded) {
+    client.add(torrentId, { path }, (t) => {
+      const date = new Date();
+      updateTorrentOnJSON(t.name, t.magnetURI, t.length, path, false, date, t.done, t.progress);
+      returnJSON(req, res, next, 200, 'ok', 'Torrent downloading');
+    });
+  } else {
+    returnJSON(req, res, next, 400, 'error', 'Torrent was added before');
   }
+  client.on('error', () => {
+    returnJSON(req, res, next, 400, 'error', 'Invalid torrent');
+  });
 };
 
 const deleteTorrent = (req, res, next) => {
@@ -49,16 +38,10 @@ const deleteTorrent = (req, res, next) => {
     const { id: torrentId } = req.body;
     client.remove(torrentId, () => {
       deleteTorrentFromJSON(torrentId);
-      res.status(200);
-      res.json({
-        status: 'ok',
-        message: 'Torrent deleted',
-      });
-      next();
+      returnJSON(req, res, next, 200, 'ok', 'Torrent deleted');
     });
   } catch (error) {
-    console.log(error);
-    next();
+    returnJSON(req, res, next, 400, 'error', 'Unexpected error');
   }
 };
 
@@ -67,12 +50,7 @@ const deleteTorrentAndFiles = (req, res, next) => {
     fs.rmdir(folder, { recursive: true }, (err) => {
       if (err) throw err;
       deleteTorrentFromJSON(torrentId);
-      res.status(200);
-      res.json({
-        status: 'ok',
-        message: 'Torrent and files deleted',
-      });
-      next();
+      returnJSON(req, res, next, 200, 'ok', 'Torrent and files deleted');
     });
   };
   try {
@@ -90,11 +68,7 @@ const deleteTorrentAndFiles = (req, res, next) => {
           deleteSystemFiles(folder, torrentId);
         });
       } else {
-        res.status(404);
-        res.json({
-          status: 'error',
-          message: 'Torrent does not exists',
-        });
+        returnJSON(req, res, next, 404, 'error', 'Torrent does not exists');
       }
     } else {
       const { path: pathname } = torrent;
@@ -104,8 +78,7 @@ const deleteTorrentAndFiles = (req, res, next) => {
       deleteSystemFiles(folder, torrentId);
     }
   } catch (error) {
-    console.log(error);
-    next();
+    returnJSON(req, res, next, 400, 'error', 'Unexpected error');
   }
 };
 
@@ -126,26 +99,19 @@ const pauseTorrent = (req, res, next) => {
         done,
         progress,
       );
-      res.status(200);
-      res.json({
-        status: 'ok',
-        message: 'Torrent paused',
-      });
-      next();
+      returnJSON(req, res, next, 200, 'ok', 'Torrent paused');
     });
   } catch (error) {
-    console.log(error);
-    next();
+    returnJSON(req, res, next, 400, 'error', 'Unexpected error');
   }
 };
 
 const createTorrent = (req, res, next) => {
   try {
-    const { file } = req.body;
     // To do
+    // const { file } = req.body;
   } catch (error) {
-    console.log(error);
-    next();
+    returnJSON(req, res, next, 400, 'error', 'Unexpected error');
   }
 };
 
@@ -203,8 +169,8 @@ const getAllTorrents = () => {
     } else {
       torrentsList = [];
     }
-  } catch (error) {
-    console.log('error');
+  } catch {
+    return null;
   }
   if (torrentsList.length === client.torrents.length && !areTorrentsPaused) return torrentsList;
   if (areTorrentsPaused) return torrentsList;

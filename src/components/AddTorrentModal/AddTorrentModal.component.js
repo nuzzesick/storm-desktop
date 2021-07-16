@@ -5,24 +5,44 @@ import React, {
 import StormContext from '../../context/Storm.context';
 import { downloadTorrent } from '../../api/torrents';
 import {
-  Dialog, DialogContent, Form, Title, Subtitle, Input, SelectFolder, DownloadButton,
+  Dialog,
+  DialogContent,
+  Form,
+  Title,
+  Subtitle,
+  InputContainer,
+  IconContainer,
+  MagnetIcon,
+  Input,
+  SelectFolderContainer,
+  SelectFolderInput,
+  FolderIcon,
+  DownloadButton,
 } from './AddTorrentModal.styles';
 
 const AddTorrentModal = ({ setIsDialogOpen }) => {
   const stormContext = useContext(StormContext);
   const { data: { socket } } = stormContext;
   const [torrentHash, setTorrentHash] = useState({ value: '' });
-  const [folder, setFolder] = useState(null);
+  const [folder, setFolder] = useState('');
   const dialogRef = useRef(null);
+  const torrentInput = useRef(null);
   const sendForm = async (e) => {
     e.preventDefault();
-    await downloadTorrent(torrentHash.value, folder);
+    const res = await downloadTorrent(torrentHash.value, folder);
+    if (res.message === 'Invalid torrent') {
+      console.log('invalid torrent');
+    }
     setIsDialogOpen(false);
   };
 
   socket.on('get:folder', (path) => {
     setFolder(path);
   });
+
+  const setFocusOnTorrentInput = () => {
+    torrentInput.current.focus();
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -48,22 +68,36 @@ const AddTorrentModal = ({ setIsDialogOpen }) => {
             Paste a torrent hash, magnet URI or HTTP link and Storm will
             make the rest for you.
           </Subtitle>
-          <Input
-            type="text"
-            autoFocus
-            id="torrent"
-            name="torrentHash"
-            onChange={(e) => { setTorrentHash({ value: e.target.value }); }}
-            placeholder="Paste torrent hash, magnet URI or HTTP link"
-            autoComplete="off"
-            value={torrentHash.value}
-          />
-          <SelectFolder
-            type="text"
-            value={folder ? `Save directory: ${folder}` : '📁 Choose save directory'}
-            onClick={() => socket.emit('set-directory')}
-          />
-          <DownloadButton type="submit" value="Download" disabled={!torrentHash.value || !folder} />
+          <InputContainer>
+            <IconContainer type="button" onClick={setFocusOnTorrentInput}>
+              <MagnetIcon />
+            </IconContainer>
+            <Input
+              type="text"
+              autoFocus
+              id="torrent"
+              name="torrentHash"
+              onChange={(e) => { setTorrentHash({ value: e.target.value }); }}
+              placeholder="Paste torrent hash, magnet URI or HTTP link"
+              autoComplete="off"
+              value={torrentHash.value}
+              ref={torrentInput}
+            />
+          </InputContainer>
+          <InputContainer>
+            <SelectFolderContainer type="button" onClick={() => { socket.emit('set-directory'); }}>
+              <FolderIcon />
+            </SelectFolderContainer>
+            <SelectFolderInput
+              type="text"
+              onClick={() => socket.emit('set-directory')}
+              placeholder="Choose download directory"
+              readOnly
+              value={folder}
+            />
+          </InputContainer>
+          {/* <DownloadButton type="submit" value="Download" disabled={!torrentHash.value || !folder} /> */}
+          <DownloadButton type="submit" value="Download" />
         </Form>
       </DialogContent>
     </Dialog>

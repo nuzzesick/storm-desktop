@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 import Colors from '../../commons/Colors';
 
+import Vectors from '../../commons/Vectors';
+
 export const Dialog = styled.div`
   display: flex;
   flex-direction: column;
@@ -53,50 +55,94 @@ export const Subtitle = styled.span`
   width: 75%;
 `;
 
-export const Input = styled.input`
-  background: ${Colors.INPUT_DARK1};
+export const InputContainer = styled.div`
+  display: flex;
+  align-items: center;
+  background: ${Colors.BASE_DARK1};
   width: 75%;
-  padding: 0.8rem 1.2rem;
-  font-size: 14px;
-  font-weight: 600;
-  color: ${Colors.NEUTRAL_WHITE};
   transition: 0.4s;
   border-radius: 3px;
-  border: 2px solid ${Colors.INPUT_DARK1};
+  border: 2px solid ${Colors.INPUT_DARK2};
+  margin-bottom: 0.6rem;
   &:hover {
     background: ${Colors.INPUT_DARK2};
     border: 2px solid ${Colors.INPUT_DARK2};
   }
-  &:focus {
-    background: ${Colors.INPUT_DARK};
-    border: 2px solid ${Colors.HIGHLIGHT1};
+`;
+
+export const Input = styled.input`
+  font-size: 14px;
+  font-weight: 600;
+  color: ${Colors.NEUTRAL_WHITE};
+  padding: 0.6rem 0.8rem;
+  cursor: text;
+  width: 100%;
+  &:hover {
+    border: none;
+    outline: 0;
   }
 `;
 
-export const SelectFolder = styled.input`
-  background: transparent;
-  width: 75%;
-  padding: 0.4rem 1.2rem;
-  font-size: 12px;
-  font-weight: 500;
-  color: ${Colors.NEUTRAL_WHITE};
-  transition: 0.4s;
-  border-radius: 3px;
-  border: 2px solid ${Colors.INPUT_DARK1};
-  margin: 1rem 0;
+export const IconContainer = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.6rem 0 1rem;
+  background: ${Colors.INPUT_DARK1};
+  border-right: 2px solid ${Colors.INPUT_DARK2};
+  height: 100%;
   cursor: pointer;
-  &:hover {
+  &:focus {
+    outline: 0;
+    border: none;
     background: ${Colors.INPUT_DARK1};
   }
+`;
+
+export const MagnetIcon = styled(Vectors.magnetIcon)`
+  fill: ${Colors.HIGHLIGHT1};
+  width: 0.8rem;
+  margin-right: 0.4rem;
+`;
+
+export const SelectFolderContainer = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.6rem 0 1rem;
+  background: ${Colors.INPUT_DARK1};
+  border-right: 2px solid ${Colors.INPUT_DARK2};
+  height: 100%;
+  cursor: pointer;
   &:focus {
-    background: transparent;
-    border: 2px solid ${Colors.INPUT_DARK1};
+    outline: 0;
+    border: none;
+    background: ${Colors.INPUT_DARK1};
   }
+`;
+
+export const SelectFolderInput = styled.input`
+  font-size: 14px;
+  font-weight: 600;
+  color: ${Colors.NEUTRAL_WHITE};
+  padding: 0.6rem 0.8rem;
+  cursor: pointer;
+  width: 100%;
+  &:hover {
+    border: none;
+    outline: 0;
+  }
+`;
+
+export const FolderIcon = styled(Vectors.folderIcon)`
+  fill: ${Colors.HIGHLIGHT1};
+  width: 0.8rem;
+  margin-right: 0.4rem;
 `;
 
 export const DownloadButton = styled.input`
   display: flex;
-  margin-top: 0.6rem;
+  margin-top: 0.8rem;
   background: ${Colors.HIGHLIGHT1};
   width: fit-content;
   padding: 0.5rem 3rem;

@@ -13,7 +13,7 @@ export const post = async (url, body) => {
     const data = await response.json();
     return data;
   } catch (err) {
-    return (err);
+    return err;
   }
 };
 
