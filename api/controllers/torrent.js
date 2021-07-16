@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 const fs = require('fs');
+
 const WebTorrent = require('webtorrent');
 // const createATorrent = require('create-torrent');
 const {
@@ -12,26 +13,31 @@ const {
 
 const WebTorrentClient = new WebTorrent();
 
-let client;
-
-recoverClient(WebTorrentClient)
-  .then((recoveredClient) => {
-    client = recoveredClient;
-  });
+const client = recoverClient(WebTorrentClient);
 
 const downloadTorrent = (req, res, next) => {
   try {
     const { id: torrentId, path } = req.body;
-    client.add(torrentId, { path: path || 'downloads' }, (t) => {
-      const date = new Date();
-      updateTorrentOnJSON(t.name, t.magnetURI, t.length, path || 'downloads', false, date, t.done, t.progress);
-      res.status(200);
+    const torrentExists = client.get(torrentId);
+    if (!torrentExists) {
+      client.add(torrentId, { path }, (t) => {
+        const date = new Date();
+        updateTorrentOnJSON(t.name, t.magnetURI, t.length, path, false, date, t.done, t.progress);
+        res.status(200);
+        res.json({
+          status: 'ok',
+          message: 'Torrent downloading',
+        });
+        next();
+      });
+    } else {
+      res.status(400);
       res.json({
-        status: 'ok',
-        message: 'Torrent downloading',
+        status: 'error',
+        message: 'Torrent already exists',
       });
       next();
-    });
+    }
   } catch (error) {
     console.log(error);
     next();
@@ -108,7 +114,7 @@ const pauseTorrent = (req, res, next) => {
     const { id: torrentId } = req.body;
     const torrent = client.get(torrentId);
     const { progress, done, path } = torrent;
-    client.remove(torrentId, (t) => {
+    client.remove(torrentId, () => {
       const date = new Date();
       updateTorrentOnJSON(
         torrent.name,

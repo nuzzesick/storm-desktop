@@ -1,5 +1,5 @@
 const {
-  app, BrowserWindow, Menu,
+  app, BrowserWindow, Menu, dialog,
 } = require('electron');
 const path = require('path');
 const socketio = require('socket.io');
@@ -18,13 +18,17 @@ const io = socketio(http, {
   },
 });
 
-server(io);
+server(io, dialog);
 
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 1300,
     height: 800,
+    nodeIntegration: false,
+    enableRemoteModule: false,
+    contextIsolation: true,
+    sandbox: true,
   });
 
   mainWindow.maximize();
@@ -83,18 +87,17 @@ Menu.setApplicationMenu(menu);
 
 app.whenReady()
   .then(() => {
-    if (isMac === 'darwin') {
+    if (isMac) {
       app.dock.setMenu(dockMenu);
     }
   })
   .then(() => {
     createWindow();
-
     app.on('activate', () => {
       if (BrowserWindow.getAllWindows().length === 0) createWindow();
     });
   });
 
 app.on('window-all-closed', () => {
-  if (isMac !== 'darwin') app.quit();
+  if (!isMac) app.quit();
 });

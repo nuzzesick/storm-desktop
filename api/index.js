@@ -26,7 +26,7 @@ const app = express();
 // Ports
 const port = 8000;
 
-const server = (io) => {
+const server = (io, dialog) => {
   app.use(express.json());
 
   app.use(cors());
@@ -45,6 +45,10 @@ const server = (io) => {
     socket.on('get:list', () => {
       const listOfTorrents = getAllTorrents();
       socket.emit('return:list', listOfTorrents);
+    });
+    socket.on('set-directory', async () => {
+      const folder = await dialog.showOpenDialog({ properties: ['openDirectory'] });
+      socket.emit('get:folder', folder.filePaths[0]);
     });
   });
 

@@ -1,18 +1,28 @@
 import PropTypes from 'prop-types';
-import React, { useState, useEffect, useRef } from 'react';
+import React, {
+  useState, useEffect, useRef, useContext,
+} from 'react';
+import StormContext from '../../context/Storm.context';
 import { downloadTorrent } from '../../api/torrents';
 import {
-  Dialog, DialogContent, Form, Title, Subtitle, Input, DownloadButton,
+  Dialog, DialogContent, Form, Title, Subtitle, Input, SelectFolder, DownloadButton,
 } from './AddTorrentModal.styles';
 
 const AddTorrentModal = ({ setIsDialogOpen }) => {
+  const stormContext = useContext(StormContext);
+  const { data: { socket } } = stormContext;
   const [torrentHash, setTorrentHash] = useState({ value: '' });
+  const [folder, setFolder] = useState(null);
   const dialogRef = useRef(null);
   const sendForm = async (e) => {
     e.preventDefault();
-    await downloadTorrent(torrentHash.value);
+    await downloadTorrent(torrentHash.value, folder);
     setIsDialogOpen(false);
   };
+
+  socket.on('get:folder', (path) => {
+    setFolder(path);
+  });
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -48,7 +58,12 @@ const AddTorrentModal = ({ setIsDialogOpen }) => {
             autoComplete="off"
             value={torrentHash.value}
           />
-          <DownloadButton type="submit" value="Download" disabled={!torrentHash.value} />
+          <SelectFolder
+            type="text"
+            value={folder ? `Save directory: ${folder}` : '📁 Choose save directory'}
+            onClick={() => socket.emit('set-directory')}
+          />
+          <DownloadButton type="submit" value="Download" disabled={!torrentHash.value || !folder} />
         </Form>
       </DialogContent>
     </Dialog>
