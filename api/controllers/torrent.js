@@ -20,9 +20,9 @@ const downloadTorrent = (req, res, next) => {
     const { id: torrentId, path } = req.body;
     const torrentExists = client.get(torrentId);
     if (!torrentExists) {
-      client.add(torrentId, { path: path || 'downloads' }, (t) => {
+      client.add(torrentId, { path }, (t) => {
         const date = new Date();
-        updateTorrentOnJSON(t.name, t.magnetURI, t.length, path || 'downloads', false, date, t.done, t.progress);
+        updateTorrentOnJSON(t.name, t.magnetURI, t.length, path, false, date, t.done, t.progress);
         res.status(200);
         res.json({
           status: 'ok',
