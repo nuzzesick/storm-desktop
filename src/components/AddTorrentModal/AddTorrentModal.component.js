@@ -4,41 +4,66 @@ import React, {
 } from 'react';
 import StormContext from '../../context/Storm.context';
 import { downloadTorrent } from '../../api/torrents';
+import Loading from '../Loading/Loading';
 import {
   Dialog,
   DialogContent,
   Form,
   Title,
   Subtitle,
+  TorrentValidationContainer,
   InputContainer,
   IconContainer,
+  InputContainerError,
   MagnetIcon,
   Input,
   SelectFolderContainer,
   SelectFolderInput,
   FolderIcon,
   DownloadButton,
+  LoadingContainer,
 } from './AddTorrentModal.styles';
 
 const AddTorrentModal = ({ setIsDialogOpen }) => {
   const stormContext = useContext(StormContext);
   const { data: { socket } } = stormContext;
   const [torrentHash, setTorrentHash] = useState({ value: '' });
+  const [isValidTorrent, setIsValidTorrent] = useState(false);
+  const [doingValidation, setDoingValidation] = useState(null);
   const [folder, setFolder] = useState('');
   const dialogRef = useRef(null);
   const torrentInput = useRef(null);
+  const isReadyToDownload = isValidTorrent === true || isValidTorrent === false || !folder;
   const sendForm = async (e) => {
     e.preventDefault();
-    const res = await downloadTorrent(torrentHash.value, folder);
-    if (res.message === 'Invalid torrent') {
-      console.log('invalid torrent');
-    }
+    await downloadTorrent(torrentHash.value, folder);
     setIsDialogOpen(false);
   };
 
   socket.on('get:folder', (path) => {
     setFolder(path);
   });
+
+  socket.on('set:valid-torrent', (torrent) => {
+    setIsValidTorrent(torrent);
+    setDoingValidation(false);
+  });
+
+  const handleTorrentValidation = (e) => {
+    setDoingValidation(true);
+    setTorrentHash({ value: e.target.value });
+    if (e.target.value !== '') {
+      socket.emit('check:valid-torrent', e.target.value);
+    } else {
+      setDoingValidation(false);
+    }
+  };
+
+  useEffect(() => {
+    if (doingValidation) {
+      setIsValidTorrent(true);
+    }
+  }, [doingValidation]);
 
   const setFocusOnTorrentInput = () => {
     torrentInput.current.focus();
@@ -59,6 +84,26 @@ const AddTorrentModal = ({ setIsDialogOpen }) => {
     };
   }, [dialogRef]);
 
+  const inputContainerContent = (
+    <>
+      <IconContainer type="button" onClick={setFocusOnTorrentInput}>
+        <MagnetIcon />
+      </IconContainer>
+      <Input
+        doingValidation={doingValidation}
+        type="text"
+        autoFocus
+        id="torrent"
+        name="torrentHash"
+        onChange={handleTorrentValidation}
+        placeholder="Paste torrent hash, magnet URI or HTTP link"
+        autoComplete="off"
+        value={torrentHash.value}
+        ref={torrentInput}
+      />
+    </>
+  );
+
   return (
     <Dialog>
       <DialogContent ref={dialogRef}>
@@ -68,36 +113,39 @@ const AddTorrentModal = ({ setIsDialogOpen }) => {
             Paste a torrent hash, magnet URI or HTTP link and Storm will
             make the rest for you.
           </Subtitle>
+          <TorrentValidationContainer>
+            {
+              !isValidTorrent && doingValidation !== null ? (
+                <InputContainerError>
+                  {inputContainerContent}
+                </InputContainerError>
+              ) : (
+                <InputContainer>
+                  {inputContainerContent}
+                </InputContainer>
+              )
+            }
+            {
+              doingValidation && (
+                <LoadingContainer>
+                  <Loading />
+                </LoadingContainer>
+              )
+            }
+          </TorrentValidationContainer>
           <InputContainer>
-            <IconContainer type="button" onClick={setFocusOnTorrentInput}>
-              <MagnetIcon />
-            </IconContainer>
-            <Input
-              type="text"
-              autoFocus
-              id="torrent"
-              name="torrentHash"
-              onChange={(e) => { setTorrentHash({ value: e.target.value }); }}
-              placeholder="Paste torrent hash, magnet URI or HTTP link"
-              autoComplete="off"
-              value={torrentHash.value}
-              ref={torrentInput}
-            />
-          </InputContainer>
-          <InputContainer>
-            <SelectFolderContainer type="button" onClick={() => { socket.emit('set-directory'); }}>
+            <SelectFolderContainer type="button" onClick={() => { socket.emit('set:directory'); }}>
               <FolderIcon />
             </SelectFolderContainer>
             <SelectFolderInput
               type="text"
-              onClick={() => socket.emit('set-directory')}
+              onClick={() => socket.emit('set:directory')}
               placeholder="Choose download directory"
               readOnly
               value={folder}
             />
           </InputContainer>
-          {/* <DownloadButton type="submit" value="Download" disabled={!torrentHash.value || !folder} /> */}
-          <DownloadButton type="submit" value="Download" />
+          <DownloadButton type="submit" value="Download" disabled={isReadyToDownload} />
         </Form>
       </DialogContent>
     </Dialog>

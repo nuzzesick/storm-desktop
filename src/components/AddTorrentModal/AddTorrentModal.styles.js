@@ -55,11 +55,17 @@ export const Subtitle = styled.span`
   width: 75%;
 `;
 
+export const TorrentValidationContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 export const InputContainer = styled.div`
   display: flex;
   align-items: center;
   background: ${Colors.BASE_DARK1};
   width: 75%;
+  height: 75%;
   transition: 0.4s;
   border-radius: 3px;
   border: 2px solid ${Colors.INPUT_DARK2};
@@ -67,6 +73,17 @@ export const InputContainer = styled.div`
   &:hover {
     background: ${Colors.INPUT_DARK2};
     border: 2px solid ${Colors.INPUT_DARK2};
+  }
+`;
+
+export const InputContainerError = styled(InputContainer)`
+  border: 2px solid #d94a4a;
+  &:hover {
+    background: ${Colors.INPUT_DARK2};
+    border: 2px solid #d94a4a;
+  }
+  svg {
+    fill: #d94a4a;
   }
 `;
 
@@ -138,6 +155,12 @@ export const FolderIcon = styled(Vectors.folderIcon)`
   fill: ${Colors.HIGHLIGHT1};
   width: 0.8rem;
   margin-right: 0.4rem;
+`;
+
+export const LoadingContainer = styled.div`
+  width: 1.2rem;
+  height: 1.2rem;
+  margin: -0.6rem 0 0 1rem;
 `;
 
 export const DownloadButton = styled.input`

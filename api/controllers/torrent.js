@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 const fs = require('fs');
+const parseTorrent = require('parse-torrent');
 
 const WebTorrent = require('webtorrent');
 // const createATorrent = require('create-torrent');
@@ -16,21 +17,37 @@ const WebTorrentClient = new WebTorrent();
 
 const client = recoverClient(WebTorrentClient);
 
-const downloadTorrent = (req, res, next) => {
-  const { id: torrentId, path } = req.body;
-  const torrentWasAdded = client.get(torrentId);
-  if (!torrentWasAdded) {
-    client.add(torrentId, { path }, (t) => {
-      const date = new Date();
-      updateTorrentOnJSON(t.name, t.magnetURI, t.length, path, false, date, t.done, t.progress);
-      returnJSON(req, res, next, 200, 'ok', 'Torrent downloading');
+const checkIfTorrentIsValid = (torrentId) => new Promise((resolve) => {
+  try {
+    parseTorrent(torrentId);
+    resolve(torrentId);
+  } catch {
+    parseTorrent.remote(torrentId, (err) => {
+      if (err) {
+        resolve(false);
+      } else {
+        resolve(torrentId);
+      }
     });
-  } else {
-    returnJSON(req, res, next, 400, 'error', 'Torrent was added before');
   }
-  client.on('error', () => {
-    returnJSON(req, res, next, 400, 'error', 'Invalid torrent');
-  });
+});
+
+const downloadTorrent = (req, res, next) => {
+  try {
+    const { id: torrentId, path } = req.body;
+    const torrentWasAdded = client.get(torrentId);
+    if (!torrentWasAdded) {
+      client.add(torrentId, { path }, (t) => {
+        const date = new Date();
+        updateTorrentOnJSON(t.name, t.magnetURI, t.length, path, false, date, t.done, t.progress);
+        returnJSON(req, res, next, 200, 'ok', 'Torrent downloading');
+      });
+    } else {
+      returnJSON(req, res, next, 400, 'error', 'Torrent was already added');
+    }
+  } catch (error) {
+    returnJSON(req, res, next, 400, 'error', 'Unexpected error');
+  }
 };
 
 const deleteTorrent = (req, res, next) => {
@@ -178,6 +195,7 @@ const getAllTorrents = () => {
 };
 
 module.exports = {
+  checkIfTorrentIsValid,
   downloadTorrent,
   deleteTorrent,
   deleteTorrentAndFiles,
