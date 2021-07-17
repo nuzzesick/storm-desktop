@@ -52,11 +52,16 @@ const downloadTorrent = (req, res, next) => {
 
 const deleteTorrent = (req, res, next) => {
   try {
-    const { id: torrentId } = req.body;
-    client.remove(torrentId, () => {
+    const { id: torrentId, paused: torrentIsPaused } = req.body;
+    if (torrentIsPaused) {
+      client.remove(torrentId, () => {
+        deleteTorrentFromJSON(torrentId);
+        returnJSON(req, res, next, 200, 'ok', 'Torrent deleted');
+      });
+    } else {
       deleteTorrentFromJSON(torrentId);
       returnJSON(req, res, next, 200, 'ok', 'Torrent deleted');
-    });
+    }
   } catch (error) {
     returnJSON(req, res, next, 400, 'error', 'Unexpected error');
   }

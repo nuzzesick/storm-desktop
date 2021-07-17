@@ -22,6 +22,7 @@ import {
   FolderIcon,
   DownloadButton,
   LoadingContainer,
+  SnackBar,
 } from './AddTorrentModal.styles';
 
 const AddTorrentModal = ({ setIsDialogOpen }) => {
@@ -30,14 +31,19 @@ const AddTorrentModal = ({ setIsDialogOpen }) => {
   const [torrentHash, setTorrentHash] = useState({ value: '' });
   const [isValidTorrent, setIsValidTorrent] = useState(false);
   const [doingValidation, setDoingValidation] = useState(null);
+  const [error, setError] = useState(false);
   const [folder, setFolder] = useState('');
   const dialogRef = useRef(null);
   const torrentInput = useRef(null);
   const isReadyToDownload = isValidTorrent === true || isValidTorrent === false || !folder;
   const sendForm = async (e) => {
     e.preventDefault();
-    await downloadTorrent(torrentHash.value, folder);
-    setIsDialogOpen(false);
+    const res = await downloadTorrent(torrentHash.value, folder);
+    if (res.status === 'error') {
+      setError(res.message);
+    } else {
+      setIsDialogOpen(false);
+    }
   };
 
   socket.on('get:folder', (path) => {
@@ -50,12 +56,14 @@ const AddTorrentModal = ({ setIsDialogOpen }) => {
   });
 
   const handleTorrentValidation = (e) => {
+    setError(false);
     setDoingValidation(true);
     setTorrentHash({ value: e.target.value });
     if (e.target.value !== '') {
       socket.emit('check:valid-torrent', e.target.value);
     } else {
       setDoingValidation(false);
+      setIsValidTorrent(false);
     }
   };
 
@@ -64,6 +72,14 @@ const AddTorrentModal = ({ setIsDialogOpen }) => {
       setIsValidTorrent(true);
     }
   }, [doingValidation]);
+
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        setError(false);
+      }, 3000);
+    }
+  }, [error]);
 
   const setFocusOnTorrentInput = () => {
     torrentInput.current.focus();
@@ -90,7 +106,6 @@ const AddTorrentModal = ({ setIsDialogOpen }) => {
         <MagnetIcon />
       </IconContainer>
       <Input
-        doingValidation={doingValidation}
         type="text"
         autoFocus
         id="torrent"
@@ -139,7 +154,7 @@ const AddTorrentModal = ({ setIsDialogOpen }) => {
             </SelectFolderContainer>
             <SelectFolderInput
               type="text"
-              onClick={() => socket.emit('set:directory')}
+              onClick={() => { socket.emit('set:directory'); }}
               placeholder="Choose download directory"
               readOnly
               value={folder}
@@ -148,6 +163,11 @@ const AddTorrentModal = ({ setIsDialogOpen }) => {
           <DownloadButton type="submit" value="Download" disabled={isReadyToDownload} />
         </Form>
       </DialogContent>
+      {error && (
+        <SnackBar>
+          {error}
+        </SnackBar>
+      )}
     </Dialog>
   );
 };
