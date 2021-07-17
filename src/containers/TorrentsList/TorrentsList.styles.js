@@ -39,6 +39,11 @@ export const Content = styled.div`
   background: ${Colors.BASE_DARK1};
 `;
 
+export const LoadingContent = styled.div`
+  width: 40px;
+  height: 40px;
+`;
+
 export const EmptyState = styled.div`
   display: flex;
   flex-direction: column;

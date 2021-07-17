@@ -56,10 +56,20 @@ const getTorrentOnJSON = (torrentId) => {
   return dataFile.filter((torrent) => torrent.id === torrentId);
 };
 
+const returnJSON = (req, res, next, code, status, message) => {
+  res.status(code);
+  res.json({
+    status,
+    message,
+  });
+  next();
+};
+
 module.exports = {
   filePath,
   recoverClient,
   updateTorrentOnJSON,
   deleteTorrentFromJSON,
   getTorrentOnJSON,
+  returnJSON,
 };

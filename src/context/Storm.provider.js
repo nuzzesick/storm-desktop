@@ -23,7 +23,7 @@ const StormProvider = ({ children }) => {
 
   React.useEffect(() => {
     if (torrentSearch === '') {
-      socket.on('return:list', (list) => {
+      socket.on('set:list', (list) => {
         setTorrentsList(list);
       });
     } else {

@@ -3,9 +3,9 @@ import styled, { keyframes } from 'styled-components';
 import Colors from '../../commons/Colors';
 
 export const Spinner = styled.div`
-  width: 40px;
-  height: 40px;
-  position: relative;
+  width: 100%;
+  height: 100%;
+  position: sticky;
 `;
 
 const skBounce = keyframes`

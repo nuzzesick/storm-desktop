@@ -19,6 +19,7 @@ const {
   pauseTorrent,
   getAllTorrents,
   createTorrent,
+  checkIfTorrentIsValid,
 } = require('./controllers/torrent');
 
 const app = express();
@@ -44,9 +45,13 @@ const server = (io, dialog) => {
   io.on('connection', (socket) => {
     socket.on('get:list', () => {
       const listOfTorrents = getAllTorrents();
-      socket.emit('return:list', listOfTorrents);
+      socket.emit('set:list', listOfTorrents);
     });
-    socket.on('set-directory', async () => {
+    socket.on('check:valid-torrent', async (torrentId) => {
+      const isTorrentValid = await checkIfTorrentIsValid(torrentId);
+      socket.emit('set:valid-torrent', isTorrentValid);
+    });
+    socket.on('set:directory', async () => {
       const folder = await dialog.showOpenDialog({ properties: ['openDirectory'] });
       socket.emit('get:folder', folder.filePaths[0]);
     });

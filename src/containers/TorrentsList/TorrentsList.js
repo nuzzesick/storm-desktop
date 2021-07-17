@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useContext, useState, useEffect } from 'react';
 import StormContext from '../../context/Storm.context';
 import {
-  AppContent, TorrentsGrid, Content, EmptyState, EmptyTitle, EmptySubtitle,
+  AppContent, TorrentsGrid, Content, EmptyState, EmptyTitle, EmptySubtitle, LoadingContent,
 } from './TorrentsList.styles';
 import Loading from '../../components/Loading/Loading';
 import EmptyStateIcon from './EmptyStateIcon';
@@ -34,7 +34,9 @@ const TorrentsList = ({ activeFilter }) => {
   if (isLoading) {
     return (
       <Content>
-        <Loading />
+        <LoadingContent>
+          <Loading />
+        </LoadingContent>
       </Content>
     );
   }
