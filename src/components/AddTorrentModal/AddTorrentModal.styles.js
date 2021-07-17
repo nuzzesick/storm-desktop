@@ -183,4 +183,23 @@ export const DownloadButton = styled.input`
     cursor: not-allowed;
     color: ${Colors.DISABLED_TEXT};
   }
+  &:focus {
+    background: ${Colors.HIGHLIGHT1};
+  }
+`;
+
+export const SnackBar = styled.div`
+  position: fixed;
+  background: #d94a4a;
+  margin: auto;
+  width: 30%;
+  padding: 0.4rem;
+  left: 0;
+  right: 0;
+  bottom: 10%;
+  border-radius: 3px;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: center;
 `;

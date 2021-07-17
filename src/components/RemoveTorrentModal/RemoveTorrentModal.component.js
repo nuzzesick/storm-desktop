@@ -28,7 +28,7 @@ const RemoveTorrentModal = ({ setIsRemoveDialogOpen }) => {
     if (removeFilesSelection) {
       await deleteTorrentAndFiles(torrentSelected.magnetURI || torrentSelected.id);
     } else {
-      await deleteTorrent(torrentSelected.magnetURI || torrentSelected.id);
+      await deleteTorrent(torrentSelected.magnetURI || torrentSelected.id, torrentSelected.paused);
     }
     clearTorrentSelection();
   };
