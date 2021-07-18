@@ -35,7 +35,9 @@
     "electron": "electron .",
     "api": "nodemon run-api",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "deb86": "electron-forge make --arch ia32",
+    "deb64": "electron-forge make --arch x64"
   },
   "main": "src/electron-starter.js",
   "homepage": "./",
@@ -88,7 +90,10 @@
         {
           "name": "@electron-forge/maker-deb",
           "config": {
-            "name": "Storm"
+            "name": "Storm",
+            "options": {
+              "icon": "./public/icon.png"
+            }
           },
           "platforms": [
             "linux"
