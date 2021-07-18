@@ -1,6 +1,8 @@
 {
   "name": "storm-desktop",
+  "productName" :"storm-desktop",
   "version": "0.1.0",
+  "description": "Storm is a minimal torrent client that support WebTorrent",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
@@ -38,17 +40,10 @@
   "main": "src/electron-starter.js",
   "homepage": "./",
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "extends": ["react-app", "react-app/jest"]
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
@@ -76,7 +71,8 @@
     "forge": {
       "packagerConfig": {
         "name": "Storm",
-        "icon": "public/icon.icns"
+        "icon": "public/icon.icns",
+        "executableName" : "storm-desktop"
       },
       "makers": [
         {
@@ -87,17 +83,16 @@
         },
         {
           "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
+          "platforms": ["darwin"]
         },
         {
           "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
+          "config": {
+            "name": "Storm"
+          },
+          "platforms": [
+            "linux"
+          ]
         }
       ]
     }
