@@ -32,7 +32,7 @@ const AddTorrentModal = ({ setIsDialogOpen }) => {
   const [isValidTorrent, setIsValidTorrent] = useState(false);
   const [doingValidation, setDoingValidation] = useState(null);
   const [error, setError] = useState(false);
-  const [folder, setFolder] = useState('');
+  const [folder, setFolder] = useState('downloads');
   const dialogRef = useRef(null);
   const torrentInput = useRef(null);
   const isReadyToDownload = isValidTorrent === true || isValidTorrent === false || !folder;

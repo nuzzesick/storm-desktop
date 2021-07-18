@@ -74,7 +74,10 @@
   },
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "name": "Storm",
+        "icon": "public/icon.icns"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",

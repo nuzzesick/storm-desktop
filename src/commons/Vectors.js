@@ -11,6 +11,7 @@ import { ReactComponent as PlayIcon } from '../assets/vectors/play.svg';
 import { ReactComponent as ProgressCircle } from '../assets/vectors/progress-circle.svg';
 import { ReactComponent as FolderIcon } from '../assets/vectors/folder.svg';
 import { ReactComponent as MagnetIcon } from '../assets/vectors/magnet.svg';
+import { ReactComponent as ClipboardIcon } from '../assets/vectors/clipboard.svg';
 
 const Vectors = {
   allTorrents: AllTorrentsIcon,
@@ -26,6 +27,7 @@ const Vectors = {
   progressCircle: ProgressCircle,
   folderIcon: FolderIcon,
   magnetIcon: MagnetIcon,
+  clipboardIcon: ClipboardIcon,
 };
 
 export default Vectors;

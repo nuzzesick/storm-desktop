@@ -45,9 +45,13 @@ const TorrentCard = ({ torrent }) => {
   return (
     <Card
       type="button"
-      active={torrentSelected && torrentSelected.id === torrent.id}
+      active={torrentSelected && torrentSelected.magnetURI === torrent.magnetURI}
       hidden={torrent.hidden}
-      onClick={() => { updateTorrentSelected(torrent); }}
+      onClick={() => {
+        setTimeout(() => {
+          updateTorrentSelected(torrent);
+        }, 1);
+      }}
     >
       <TopContent>
         <MainInfoContent>
@@ -90,7 +94,7 @@ const TorrentCard = ({ torrent }) => {
 
 TorrentCard.propTypes = {
   torrent: PropTypes.shape({
-    id: PropTypes.string,
+    magnetURI: PropTypes.string,
     name: PropTypes.string,
     progress: PropTypes.number,
     done: PropTypes.bool,

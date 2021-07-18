@@ -19,7 +19,9 @@ import {
   DeleteTorrentIcon,
   TorrentActionsButton,
   TorrentActionsContainer,
+  CopyMagnetURI,
   TorrentName,
+  ClipboardIcon,
 } from './Toolbar.styles';
 import AddTorrentModal from '../../components/AddTorrentModal/AddTorrentModal.component';
 import RemoveTorrentModal from '../../components/RemoveTorrentModal/RemoveTorrentModal.component';
@@ -33,6 +35,8 @@ export const Toolbar = ({ setActiveFilter }) => {
 
   const [isRemoveDialogOpen, setIsRemoveDialogOpen] = useState(false);
 
+  const [copiedToClipboard, setCopiedToClipboard] = useState(false);
+
   socket.on('new-torrent', () => {
     setIsDialogOpen(true);
     socket.off();
@@ -40,15 +44,30 @@ export const Toolbar = ({ setActiveFilter }) => {
 
   const handleTorrent = async () => {
     if (torrentSelected.paused) {
-      await downloadTorrent(torrentSelected.id);
+      await downloadTorrent(torrentSelected.magnetURI);
     } else {
       await pauseTorrent(torrentSelected.magnetURI);
     }
     clearTorrentSelection();
   };
 
+  const copyMagnetURI = () => {
+    const el = document.createElement('textarea');
+    el.value = torrentSelected.magnetURI;
+    el.setAttribute('readonly', '');
+    el.style = { position: 'absolute', left: '-9999px' };
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    setCopiedToClipboard(true);
+    document.body.removeChild(el);
+    setTimeout(() => {
+      setCopiedToClipboard(false);
+    }, 4000);
+  };
+
   return (
-    <ToolbarContainer>
+    <ToolbarContainer onMouseLeave={() => setCopiedToClipboard(false)}>
       {torrentSelected ? (
         <>
           <MainContentContainer>
@@ -64,7 +83,13 @@ export const Toolbar = ({ setActiveFilter }) => {
                   ) : (
                     <>
                       <PauseIcon />
-                      Pause
+                      {
+                        torrentSelected.done ? (
+                          'Stop seeding'
+                        ) : (
+                          'Pause'
+                        )
+                      }
                     </>
                   )
                 }
@@ -76,6 +101,13 @@ export const Toolbar = ({ setActiveFilter }) => {
                 Delete
               </TorrentActionsButton>
             </TorrentActionsContainer>
+            <CopyMagnetURI type="button" onClick={copyMagnetURI}>
+              <div>
+                <ClipboardIcon />
+                Copy magnet URI
+              </div>
+              {copiedToClipboard && <span>Copied to clipboard</span>}
+            </CopyMagnetURI>
             {/* <SettingsIcon /> */}
           </MainContentContainer>
           {

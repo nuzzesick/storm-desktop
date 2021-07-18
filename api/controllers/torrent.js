@@ -177,7 +177,7 @@ const getAllTorrents = () => {
           }
         } else {
           torrentsList.push({
-            id: t.id,
+            magnetURI: t.id,
             name: t.name,
             date: t.date,
             length: t.length,

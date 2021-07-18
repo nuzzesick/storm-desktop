@@ -28,7 +28,7 @@ export const SearchBox = () => {
   return (
     <SearchBoxContainer>
       <SearchIcon />
-      <TextInput onChange={handleInputChange} placeholder="Search torrents" value={inputText} />
+      <TextInput onChange={handleInputChange} placeholder="Search torrents by name.." value={inputText} />
       <ClearInputIcon type="button" hidden={inputText === ''} onClick={clearInputText} />
     </SearchBoxContainer>
   );

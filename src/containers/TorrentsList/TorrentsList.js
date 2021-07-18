@@ -59,7 +59,7 @@ const TorrentsList = ({ activeFilter }) => {
           <TorrentsGrid>
             {
               torrentsToShow.map((torrent) => (
-                <TorrentCard torrent={torrent} key={`torrent-${torrent.id}`} />
+                <TorrentCard torrent={torrent} key={`torrent-${torrent.magnetURI}`} />
               ))
             }
           </TorrentsGrid>
