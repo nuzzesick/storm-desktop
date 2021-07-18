@@ -1,70 +1,134 @@
+import PropTypes from 'prop-types';
 import React, {
-  useContext, useMemo, Fragment, useState,
+  useContext, useState,
 } from 'react';
-
+import io from 'socket.io-client';
 import { SearchBox } from '../../components/SearchBox/SearchBox.component';
-
 import StormContext from '../../context/Storm.context';
-
+import { downloadTorrent, pauseTorrent } from '../../api/torrents';
 import {
   ToolbarContainer,
   MainContentContainer,
   ContentContainer,
   AddTorrentButtonContainer,
-  CreateTorrentButton,
+  // CreateTorrentButton,
   ButtonLabel,
-  AddTorrentIcon,
-  SettingsIcon,
+  // SettingsIcon,
   PlayIcon,
   PauseIcon,
   DeleteTorrentIcon,
   TorrentActionsButton,
   TorrentActionsContainer,
+  CopyMagnetURI,
+  TorrentName,
+  ClipboardIcon,
 } from './Toolbar.styles';
 import AddTorrentModal from '../../components/AddTorrentModal/AddTorrentModal.component';
+import RemoveTorrentModal from '../../components/RemoveTorrentModal/RemoveTorrentModal.component';
 
-export const Toolbar = () => {
+export const Toolbar = ({ setActiveFilter }) => {
   const stormContext = useContext(StormContext);
 
-  const isTorrentSelected = useMemo(
-    () => stormContext.data.isTorrentSelected,
-    [stormContext.data.isTorrentSelected],
-  );
+  const { data: { torrentSelected, socket }, actions: { clearTorrentSelection } } = stormContext;
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+  const [isRemoveDialogOpen, setIsRemoveDialogOpen] = useState(false);
+
+  const [copiedToClipboard, setCopiedToClipboard] = useState(false);
+
+  socket.on('new-torrent', () => {
+    setIsDialogOpen(true);
+    socket.off();
+  });
+
+  const handleTorrent = async () => {
+    if (torrentSelected.paused) {
+      await downloadTorrent(torrentSelected.magnetURI);
+    } else {
+      await pauseTorrent(torrentSelected.magnetURI);
+    }
+    clearTorrentSelection();
+  };
+
+  const copyMagnetURI = () => {
+    const el = document.createElement('textarea');
+    el.value = torrentSelected.magnetURI;
+    el.setAttribute('readonly', '');
+    el.style = { position: 'absolute', left: '-9999px' };
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    setCopiedToClipboard(true);
+    document.body.removeChild(el);
+    setTimeout(() => {
+      setCopiedToClipboard(false);
+    }, 4000);
+  };
+
   return (
-    <ToolbarContainer>
-      {isTorrentSelected ? (
-        <MainContentContainer>
-          <TorrentActionsContainer>
-            <TorrentActionsButton>
-              <PlayIcon />
-            </TorrentActionsButton>
-            <TorrentActionsButton>
-              <PauseIcon />
-            </TorrentActionsButton>
-            <TorrentActionsButton>
-              <DeleteTorrentIcon />
-            </TorrentActionsButton>
-          </TorrentActionsContainer>
-          <SettingsIcon />
-        </MainContentContainer>
+    <ToolbarContainer onMouseLeave={() => setCopiedToClipboard(false)}>
+      {torrentSelected ? (
+        <>
+          <MainContentContainer>
+            <TorrentActionsContainer>
+              <TorrentName>{torrentSelected.name}</TorrentName>
+              <TorrentActionsButton onClick={handleTorrent}>
+                {
+                  torrentSelected.paused ? (
+                    <>
+                      <PlayIcon />
+                      {torrentSelected.done ? 'Seed' : 'Resume'}
+                    </>
+                  ) : (
+                    <>
+                      <PauseIcon />
+                      {
+                        torrentSelected.done ? (
+                          'Stop seeding'
+                        ) : (
+                          'Pause'
+                        )
+                      }
+                    </>
+                  )
+                }
+              </TorrentActionsButton>
+              <TorrentActionsButton
+                onClick={() => { setIsRemoveDialogOpen(true); }}
+              >
+                <DeleteTorrentIcon />
+                Delete
+              </TorrentActionsButton>
+            </TorrentActionsContainer>
+            <CopyMagnetURI type="button" onClick={copyMagnetURI}>
+              <div>
+                <ClipboardIcon />
+                Copy magnet URI
+              </div>
+              {copiedToClipboard && <span>Copied to clipboard</span>}
+            </CopyMagnetURI>
+            {/* <SettingsIcon /> */}
+          </MainContentContainer>
+          {
+          isRemoveDialogOpen
+            && <RemoveTorrentModal setIsRemoveDialogOpen={setIsRemoveDialogOpen} />
+        }
+        </>
       ) : (
         <>
           <MainContentContainer>
             <ContentContainer>
               <AddTorrentButtonContainer onClick={() => setIsDialogOpen(true)}>
-                <AddTorrentIcon />
-                <ButtonLabel>Add new torrent</ButtonLabel>
+                <ButtonLabel>+ Add new torrent</ButtonLabel>
               </AddTorrentButtonContainer>
-              <CreateTorrentButton>
+              {/* <CreateTorrentButton>
                 <ButtonLabel>Create torrent</ButtonLabel>
-              </CreateTorrentButton>
+              </CreateTorrentButton> */}
             </ContentContainer>
             <ContentContainer>
-              <SearchBox />
-              <SettingsIcon />
+              <SearchBox setActiveFilter={setActiveFilter} />
+              {/* <SettingsIcon /> */}
             </ContentContainer>
           </MainContentContainer>
           {
@@ -75,6 +139,10 @@ export const Toolbar = () => {
       )}
     </ToolbarContainer>
   );
+};
+
+Toolbar.propTypes = {
+  setActiveFilter: PropTypes.func.isRequired,
 };
 
 export default Toolbar;

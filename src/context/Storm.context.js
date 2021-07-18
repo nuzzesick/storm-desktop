@@ -3,14 +3,16 @@ import React from 'react';
 export const defaultValue = {
   data: {
     darkThemeIsActive: true,
-    torrentsList: [],
-    isTorrentSelected: false,
-    torrentSearch: null,
+    torrentsList: null,
+    torrentSelected: null,
+    torrentSearch: '',
+    socket: null,
   },
   actions: {
     updateAppTheme: () => undefined,
-    updateIsTorrentSelected: () => undefined,
+    updateTorrentSelected: () => undefined,
     updateTorrentSearch: () => undefined,
+    clearTorrentSelection: () => undefined,
   },
 };
 

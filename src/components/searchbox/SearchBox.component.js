@@ -13,7 +13,7 @@ export const SearchBox = () => {
   const stormContext = useContext(StormContext);
   const inputText = useMemo(
     () => stormContext.data.torrentSearch,
-    [stormContext.data.torrentSearch]
+    [stormContext.data.torrentSearch],
   );
 
   const handleInputChange = (e) => {
@@ -28,8 +28,8 @@ export const SearchBox = () => {
   return (
     <SearchBoxContainer>
       <SearchIcon />
-      <TextInput onChange={handleInputChange} value={inputText} />
-      {inputText !== '' && <ClearInputIcon onClick={clearInputText} />}
+      <TextInput onChange={handleInputChange} placeholder="Search torrents by name.." value={inputText} />
+      <ClearInputIcon type="button" hidden={inputText === ''} onClick={clearInputText} />
     </SearchBoxContainer>
   );
 };

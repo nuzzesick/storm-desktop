@@ -5,10 +5,13 @@ import Colors from '../../commons/Colors';
 import Vectors from '../../commons/Vectors';
 
 export const ToolbarContainer = styled.div`
-  height: 70px;
-  max-width: 100vw;
+  height: 5rem;
+  width: 100%;
   background-color: ${Colors.BASE_DARK2};
   padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+  border-bottom: 1px solid #3c3c3c;
 `;
 
 export const MainContentContainer = styled.div`
@@ -22,7 +25,6 @@ export const MainContentContainer = styled.div`
 export const ContentContainer = styled.div`
   display: flex;
   align-items: center;
-  width: 30%;
 `;
 
 export const AddTorrentButtonContainer = styled.button`
@@ -30,8 +32,9 @@ export const AddTorrentButtonContainer = styled.button`
   align-items: center;
   padding: 0.5rem 1rem;
   cursor: pointer;
-  margin-right: 2rem;
+  margin: 0 1rem 0 -1rem;
   border-radius: 4px;
+  transition: 0.4s;
 
   &:hover {
     background-color: ${Colors.HIGHLIGHT2};
@@ -42,18 +45,14 @@ export const CreateTorrentButton = styled.button`
   border-radius: 4px;
   padding: 0.5rem 1rem;
   cursor: pointer;
-
+  transition: 0.4s;
   &:hover {
     background-color: ${Colors.HIGHLIGHT2};
   }
 `;
 
-export const AddTorrentIcon = styled(Vectors.addtorrentIcon)`
-  margin-right: 1rem;
-`;
-
 export const ButtonLabel = styled.span`
-  font-size: 18px;
+  font-size: 0.9rem;
   color: ${Colors.NEUTRAL_WHITE};
 `;
 
@@ -65,25 +64,98 @@ export const SettingsIcon = styled(Vectors.settingsIcon)`
   fill: ${Colors.NEUTRAL_WHITE};
 `;
 
-export const PlayIcon = styled(Vectors.playIcon)``;
+export const PlayIcon = styled(Vectors.playIcon)`
+  width: 1rem;
+  fill: ${Colors.NEUTRAL_WHITE}
+`;
 
 export const PauseIcon = styled(Vectors.pauseTorrents)`
-  width: 32px;
+  width: 0.7rem;
   fill: ${Colors.NEUTRAL_WHITE};
 `;
 
 export const DeleteTorrentIcon = styled(Vectors.deleteIcon)`
-  width: 32px;
+  width: 1.1rem;
   stroke: ${Colors.NEUTRAL_WHITE};
 `;
 
 export const TorrentActionsButton = styled.button`
-  margin: 0 1rem;
+  display: flex;
+  align-items: center;
+  padding: 0.4rem 1rem;
   cursor: pointer;
+  margin-right: 0.6rem;
+  border-radius: 4px;
+  transition: 0.4s;
+  color: white;
+  font-size: 0.9rem;
+  svg {
+    margin-right: 0.4rem;
+  }
+  &:hover {
+    background-color: ${Colors.HIGHLIGHT2};
+  }
 `;
 
 export const TorrentActionsContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const TorrentName = styled.p`
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: white;
+  margin-right: 1rem;
+  max-width: 18rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  @media (min-width: 1100px) {
+    max-width: 20rem;
+  }
+  @media (min-width: 1700px) {
+    width: 22rem;
+  }
+  @media (min-width: 2100px) {
+    max-width: 24rem;
+  }
+`;
+
+export const CopyMagnetURI = styled.button`
+  div {
+    display: flex;
+    align-items: center;
+    color: ${Colors.NEUTRAL_WHITE};
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-right: -1rem;
+    padding: 0.4rem 1rem;
+    border-radius: 4px;
+    transition: 0.4s;
+    color: white;
+    font-size: 0.9rem;
+    &:hover {
+      background-color: ${Colors.HIGHLIGHT2};
+    }
+  }
+  span {
+    position: absolute;
+    width: 10rem;
+    margin-left: -4.5rem;
+    text-align: center;
+    background: #3c3c3cde;
+    border-radius: 3px;
+    padding: 0.3rem;
+    font-size: 0.8rem;
+    color: ${Colors.NEUTRAL_WHITE};
+    margin-top: 0.4rem;
+  }
+`;
+
+export const ClipboardIcon = styled(Vectors.clipboardIcon)`
+  width: 1rem;
+  fill: ${Colors.NEUTRAL_WHITE};
+  margin-right: 0.4rem;
 `;

@@ -1,23 +1,11 @@
 const fs = require('fs');
-const pathFunc = require('path');
+const pathSystem = require('path');
 
 // File where all the torrents (as an array) will be stored
-const folder = '../../data/';
-const filePath = './data/data.json';
+const filePath = pathSystem.join(__dirname, '../../data.json');
 
-const getDataFolder = () => new Promise((resolve, reject) => {
-  if (!fs.existsSync(folder)) {
-    fs.mkdir(pathFunc.join(__dirname, folder), (err) => {
-      if (err) reject(err);
-      resolve();
-    });
-  }
-  resolve();
-});
-
-const recoverClient = async (client) => {
+const recoverClient = (client) => {
   const recoveredClient = client;
-  await getDataFolder();
   // Create the file if it does not exists
   if (!fs.existsSync(filePath)) {
     fs.writeFileSync(filePath, JSON.stringify([]));
@@ -36,17 +24,21 @@ const recoverClient = async (client) => {
   return recoveredClient;
 };
 
-const updateTorrentOnJSON = (torrentId, path, paused) => {
+const updateTorrentOnJSON = (name, torrentId, length, path, paused, date, done, progress) => {
   const dataFile = fs.readFileSync(filePath);
   let torrentsList = JSON.parse(dataFile);
   // Check if torrent already exists on JSON file
   const foundTorrent = torrentsList.some((torrent) => torrent.id === torrentId);
-  // If torrent does not exists then we add it to the JSON
-  if (!foundTorrent) torrentsList.push({ id: torrentId, path, paused });
-  // If torrent already exists then we updated it
-  else {
+  // If torrent does not exists then we add it to the JSON, else then we updated it
+  if (!foundTorrent) {
+    torrentsList.push({
+      name, id: torrentId, length, path, paused, date, done, progress,
+    });
+  } else {
     torrentsList = torrentsList.filter((torrent) => torrent.id !== torrentId);
-    torrentsList.push({ id: torrentId, path, paused });
+    torrentsList.push({
+      name, id: torrentId, length, path, paused, date, done, progress,
+    });
   }
   fs.writeFileSync(filePath, JSON.stringify(torrentsList));
 };
@@ -64,12 +56,20 @@ const getTorrentOnJSON = (torrentId) => {
   return dataFile.filter((torrent) => torrent.id === torrentId);
 };
 
+const returnJSON = (req, res, next, code, status, message) => {
+  res.status(code);
+  res.json({
+    status,
+    message,
+  });
+  next();
+};
+
 module.exports = {
-  folder,
   filePath,
-  getDataFolder,
   recoverClient,
   updateTorrentOnJSON,
   deleteTorrentFromJSON,
   getTorrentOnJSON,
+  returnJSON,
 };

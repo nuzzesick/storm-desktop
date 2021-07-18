@@ -1,9 +1,11 @@
-import { post, get } from './fetch';
+import { post } from './fetch';
 
 const API_URL = 'http://localhost:8000';
 
-export const downloadTorrent = async (torrentId, path) => post(`${API_URL}/download?id=${torrentId}`, { path });
+export const downloadTorrent = async (id, path) => post(`${API_URL}/download`, { id, path });
 
-export const getListOfTorrents = async () => get(`${API_URL}/torrents`);
+export const pauseTorrent = async (id) => post(`${API_URL}/pause`, { id });
 
-export const getTorrentInfo = async (torrentId) => get(`${API_URL}/info?id=${torrentId}`);
+export const deleteTorrent = async (id) => post(`${API_URL}/delete`, { id });
+
+export const deleteTorrentAndFiles = async (id) => post(`${API_URL}/delete-all`, { id });
