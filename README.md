@@ -3,7 +3,7 @@
 
 Storm comes with the idea of <b>change the way we see torrent clients</b>, because all of them always have those typical tables with a lot of data that most of the regular users doesn't understand it all, including me. I tried to put just the necessary features with a beautiful UI/UX.
 
-> Storm is currently in beta status and only available for MacOS, but go ahead and try it!
+> Storm is currently in beta status and only available for MacOS and Linux, but go ahead and try it!
 
 ## **Setup**
 
