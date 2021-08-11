@@ -27,6 +27,10 @@ input:focus, button:focus {
   border: none;
 }
 
+a {
+  text-decoration: none;
+}
+
 .App {
   display: flex;
   width: 100%;

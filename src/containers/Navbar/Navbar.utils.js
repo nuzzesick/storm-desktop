@@ -1,3 +1,13 @@
+import React from 'react';
+
+import {
+  AllTorrentsIcon,
+  DownloadTorrentsIcon,
+  PauseTorrentsIcon,
+  SeedingTorrentsIcon,
+  CompletedTorrentsIcon,
+} from './Navbar.styles';
+
 const categoriesList = [
   { id: 'movies', label: 'Movies' },
   { id: 'books', label: 'Books' },
@@ -12,4 +22,24 @@ const categoriesList = [
   { id: 'documents7', label: 'Documents7' },
 ];
 
-export default categoriesList;
+const statusList = (activeFilter) => (
+  [
+    {
+      id: 'all', label: 'All', icon: <AllTorrentsIcon />, active: activeFilter === 'all',
+    },
+    {
+      id: 'downloading', label: 'Downloading', icon: <DownloadTorrentsIcon />, active: activeFilter === 'downloading',
+    },
+    {
+      id: 'seeding', label: 'Seeding', icon: <SeedingTorrentsIcon />, active: activeFilter === 'seeding',
+    },
+    {
+      id: 'paused', label: 'Paused', icon: <PauseTorrentsIcon />, active: activeFilter === 'paused',
+    },
+    {
+      id: 'completed', label: 'Completed', icon: <CompletedTorrentsIcon />, active: activeFilter === 'completed',
+    },
+  ]
+);
+
+export { categoriesList, statusList };

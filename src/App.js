@@ -1,6 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Home from './pages/Home/Home';
+import { HashRouter as Router, Switch, Route } from 'react-router-dom';
+import { Home, Settings } from './pages';
 import './App.css';
 
 import StormProvider from './context/Storm.provider';
@@ -10,8 +10,11 @@ const App = () => (
     <StormProvider>
       <div className="App">
         <Switch>
-          <Route path="/">
+          <Route path="/" exact>
             <Home />
+          </Route>
+          <Route path="/settings" exact>
+            <Settings />
           </Route>
         </Switch>
       </div>
