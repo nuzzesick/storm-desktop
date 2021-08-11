@@ -5,6 +5,13 @@ Storm comes with the idea of <b>change the way we see torrent clients</b>, becau
 
 > Storm is currently in beta status and only available for MacOS and Linux, but go ahead and try it!
 
+## **Screenshots**
+
+![image](https://user-images.githubusercontent.com/27747658/128960457-05091489-730f-42a6-805e-4beb381ea8fa.png)
+![image](https://user-images.githubusercontent.com/27747658/128960480-7d548142-1cf7-4fcd-9b87-5f1b9deb9eeb.png)
+
+
+
 ## **Setup**
 
 ```
