@@ -62,7 +62,7 @@ const TorrentCard = ({ torrent }) => {
             ) : (
               <ProgressText>
                 {
-                  torrent.done ? 'Completed' : `${msToTime(torrent.timeRemaining)} remaining`
+                  torrent.done ? 'Completed' : `${msToTime(torrent.timeRemaining)} remaining | ${formatBytes(torrent.downloadSpeed)}`
                 }
               </ProgressText>
             )
@@ -104,6 +104,7 @@ TorrentCard.propTypes = {
     length: PropTypes.number,
     paused: PropTypes.bool,
     hidden: PropTypes.bool,
+    downloadSpeed: PropTypes.number,
   }).isRequired,
 };
 

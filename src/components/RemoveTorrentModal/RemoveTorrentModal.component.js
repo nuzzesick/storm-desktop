@@ -3,7 +3,7 @@ import React, {
   useState, useEffect, useRef, useContext,
 } from 'react';
 import StormContext from '../../context/Storm.context';
-import { deleteTorrent, deleteTorrentAndFiles } from '../../api/torrents';
+import { deleteTorrent, deleteTorrentAndFiles } from '../../services/torrents';
 import {
   Dialog,
   DialogContent,

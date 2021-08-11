@@ -57,6 +57,7 @@ export const ListContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   width: 80%;
+  height: 72vh;
 `;
 
 export const ScrollBox = styled.div`
@@ -133,4 +134,32 @@ export const SearchBox = styled.input`
   &:focus {
     background-color: white;
   }
+`;
+
+export const SettingsButton = styled.div`
+  text-align: left;
+  width: 80%;
+  text-decoration: none;
+  border-radius: 4px;
+  margin: 6px 0;
+  z-index: 10;
+  transition: 0.3s;
+  cursor: pointer;
+  background-color: transparent;
+  color: ${Colors.NEUTRAL_WHITE};
+  a {
+    color: ${Colors.NEUTRAL_WHITE};
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+  }
+  &:hover {
+    background-color: ${Colors.HIGHLIGHT2};
+  }
+`;
+
+export const SettingsIcon = styled(Vectors.settingsIcon)`
+  width: 14px;
+  margin-right: 12px;
+  fill: ${Colors.NEUTRAL_WHITE}
 `;

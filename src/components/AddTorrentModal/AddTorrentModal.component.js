@@ -3,7 +3,7 @@ import React, {
   useState, useEffect, useRef, useContext,
 } from 'react';
 import StormContext from '../../context/Storm.context';
-import { downloadTorrent } from '../../api/torrents';
+import { downloadTorrent } from '../../services/torrents';
 import Loading from '../Loading/Loading';
 import {
   Dialog,
@@ -27,12 +27,12 @@ import {
 
 const AddTorrentModal = ({ setIsDialogOpen }) => {
   const stormContext = useContext(StormContext);
-  const { data: { socket } } = stormContext;
+  const { data: { socket, downloadsDirectory } } = stormContext;
   const [torrentHash, setTorrentHash] = useState({ value: '' });
   const [isValidTorrent, setIsValidTorrent] = useState(false);
   const [doingValidation, setDoingValidation] = useState(null);
   const [error, setError] = useState(false);
-  const [folder, setFolder] = useState('');
+  const [folder, setFolder] = useState(downloadsDirectory);
   const dialogRef = useRef(null);
   const torrentInput = useRef(null);
   const isReadyToDownload = isValidTorrent === true || isValidTorrent === false || !folder;
