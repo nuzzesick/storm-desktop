@@ -1,39 +1,22 @@
 import PropTypes from 'prop-types';
 import React, { useContext, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import StormContext from '../../context/Storm.context';
+import { statusList as list } from './Navbar.utils';
 import {
-  AllTorrentsIcon,
-  DownloadTorrentsIcon,
-  PauseTorrentsIcon,
-  SeedingTorrentsIcon,
-  CompletedTorrentsIcon,
   ListContainer,
   StatusButton,
   StatusButtonActive,
   NavBarContentContainer,
   StatusTextContent,
   TitleTextContent,
+  SettingsButton,
+  SettingsIcon,
 } from './Navbar.styles';
 
 const Navbar = ({ activeFilter, setActiveFilter }) => {
   const { actions: { clearTorrentSelection } } = useContext(StormContext);
-  const statusList = [
-    {
-      id: 'all', label: 'All', icon: <AllTorrentsIcon />, active: activeFilter === 'all',
-    },
-    {
-      id: 'downloading', label: 'Downloading', icon: <DownloadTorrentsIcon />, active: activeFilter === 'downloading',
-    },
-    {
-      id: 'seeding', label: 'Seeding', icon: <SeedingTorrentsIcon />, active: activeFilter === 'seeding',
-    },
-    {
-      id: 'paused', label: 'Paused', icon: <PauseTorrentsIcon />, active: activeFilter === 'paused',
-    },
-    {
-      id: 'completed', label: 'Completed', icon: <CompletedTorrentsIcon />, active: activeFilter === 'completed',
-    },
-  ];
+  const statusList = list(activeFilter);
 
   return (
     <NavBarContentContainer onClick={clearTorrentSelection}>
@@ -67,6 +50,12 @@ const Navbar = ({ activeFilter, setActiveFilter }) => {
           </Fragment>
         ))}
       </ListContainer>
+      <SettingsButton>
+        <Link to="/settings">
+          <SettingsIcon />
+          Settings
+        </Link>
+      </SettingsButton>
     </NavBarContentContainer>
   );
 };

@@ -16,6 +16,7 @@ const StormProvider = ({ children }) => {
   const [torrentsList, setTorrentsList] = useState(null);
   const [torrentSelected, setTorrentSelected] = useState(null);
   const [torrentSearch, setTorrentSearch] = useState('');
+  const [downloadsDirectory, setDownloadsDirectory] = useState(localStorage.getItem('downloads_directory'));
 
   const updateAppTheme = () => {
     setDarkThemeIsActive(!darkThemeIsActive);
@@ -52,6 +53,15 @@ const StormProvider = ({ children }) => {
     });
   };
 
+  const changeDownloadsDirectory = () => {
+    socket.emit('change:directory');
+  };
+
+  socket.on('changed:directory', (folder) => {
+    localStorage.setItem('downloads_directory', folder);
+    setDownloadsDirectory(folder);
+  });
+
   const providerValue = {
     data: {
       darkThemeIsActive,
@@ -59,12 +69,14 @@ const StormProvider = ({ children }) => {
       torrentSelected,
       torrentSearch,
       socket,
+      downloadsDirectory,
     },
     actions: {
       updateAppTheme,
       updateTorrentSelected,
       updateTorrentSearch,
       clearTorrentSelection,
+      changeDownloadsDirectory,
     },
   };
 

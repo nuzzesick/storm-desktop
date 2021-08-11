@@ -2,10 +2,9 @@ import PropTypes from 'prop-types';
 import React, {
   useContext, useState,
 } from 'react';
-import io from 'socket.io-client';
 import { SearchBox } from '../../components/SearchBox/SearchBox.component';
 import StormContext from '../../context/Storm.context';
-import { downloadTorrent, pauseTorrent } from '../../api/torrents';
+import { downloadTorrent, pauseTorrent } from '../../services/torrents';
 import {
   ToolbarContainer,
   MainContentContainer,

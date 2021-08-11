@@ -55,6 +55,10 @@ const server = (io, dialog) => {
       const folder = await dialog.showOpenDialog({ properties: ['openDirectory'] });
       socket.emit('get:folder', folder.filePaths[0]);
     });
+    socket.on('change:directory', async () => {
+      const folder = await dialog.showOpenDialog({ properties: ['openDirectory'] });
+      socket.emit('changed:directory', folder.filePaths[0]);
+    });
   });
 
   app.listen(port, () => {
