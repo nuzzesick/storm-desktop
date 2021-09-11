@@ -14,6 +14,9 @@ import { ReactComponent as MagnetIcon } from '../assets/vectors/magnet.svg';
 import { ReactComponent as ClipboardIcon } from '../assets/vectors/clipboard.svg';
 import { ReactComponent as BackIcon } from '../assets/vectors/back.svg';
 import { ReactComponent as DownArrowIcon } from '../assets/vectors/down-arrow.svg';
+import { ReactComponent as CloseIcon } from '../assets/vectors/close.svg';
+import { ReactComponent as Logo } from '../assets/vectors/logo.svg';
+import { ReactComponent as GitHubIcon } from '../assets/vectors/github.svg';
 
 const Vectors = {
   allTorrents: AllTorrentsIcon,
@@ -32,6 +35,9 @@ const Vectors = {
   clipboardIcon: ClipboardIcon,
   backIcon: BackIcon,
   downArrowIcon: DownArrowIcon,
+  closeIcon: CloseIcon,
+  logo: Logo,
+  githubIcon: GitHubIcon,
 };
 
 export default Vectors;
