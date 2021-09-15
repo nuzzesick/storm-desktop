@@ -1,7 +1,9 @@
 # <img src="https://user-images.githubusercontent.com/27747658/126054843-003f6155-f7e2-4954-9229-143d6c11f9b8.png" height=26 /> Storm
 ## Storm is a modern torrent client built with Electron and React.
 
-Storm comes with the idea of <b>change the way we see torrent clients</b>, because all of them always have those typical tables with a lot of data that most of the regular users doesn't understand it all, including us. We tried to put just the necessary features with a beautiful UI/UX.
+Storm comes with the idea of change the way we see torrent clients. Traditional clients always have those tables with data you don't need to see. Storm gives you just the necessary features with a beautiful UI/UX.
+
+Storm is an open source project, so if you want to build the best torrent client ever, this is the best time for you.
 
 > Storm is currently in beta status and only available for MacOS and Linux, but go ahead and try it!
 
