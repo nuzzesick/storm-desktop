@@ -65,7 +65,7 @@ export const SettingsIcon = styled(Vectors.settingsIcon)`
 `;
 
 export const PlayIcon = styled(Vectors.playIcon)`
-  width: 1rem;
+  width: 1.1rem;
   fill: ${Colors.NEUTRAL_WHITE}
 `;
 
@@ -74,8 +74,19 @@ export const PauseIcon = styled(Vectors.pauseTorrents)`
   fill: ${Colors.NEUTRAL_WHITE};
 `;
 
+export const SeedIcon = styled(Vectors.seedingTorrents)`
+  width: 0.9rem;
+  fill: ${Colors.NEUTRAL_WHITE}
+`;
+
+export const DownloadIcon = styled(Vectors.downloadTorrents)`
+  width: 1rem;
+  fill: ${Colors.NEUTRAL_WHITE}
+`;
+
 export const DeleteTorrentIcon = styled(Vectors.deleteIcon)`
   width: 1.1rem;
+  margin-left: -0.2rem;
   stroke: ${Colors.NEUTRAL_WHITE};
 `;
 

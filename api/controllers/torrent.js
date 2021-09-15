@@ -2,7 +2,7 @@
 const fs = require('fs');
 const parseTorrent = require('parse-torrent');
 
-const WebTorrent = require('webtorrent');
+const WebTorrent = require('webtorrent-hybrid');
 // const createATorrent = require('create-torrent');
 const {
   filePath,
@@ -141,7 +141,7 @@ const getAllTorrents = () => {
   const dataFile = fs.readFileSync(filePath);
   const torrentsInJSON = dataFile && JSON.parse(dataFile);
   let areTorrentsPaused = false;
-  let torrentsList = [];
+  const torrentsList = [];
   try {
     if (torrentsInJSON && torrentsInJSON.length > 0) {
       torrentsInJSON.forEach((t) => {
@@ -154,6 +154,9 @@ const getAllTorrents = () => {
               length, magnetURI, ratio, ready, uploadSpeed, downloadSpeed, timeRemaining, done,
             } = torrent;
             const torrentName = torrent.files[0] && torrent.files[0]._torrent.name;
+            let hasVideo;
+            if (torrent.files.length && torrent.files.find((file) => file.name.endsWith('.mp4'))) hasVideo = true;
+            else hasVideo = false;
             const folder = `${pathname}/${torrentName}`;
             torrentsList.push({
               name,
@@ -162,6 +165,7 @@ const getAllTorrents = () => {
               numPeers,
               progress,
               folder,
+              hasVideo,
               infoHash,
               length,
               magnetURI,
@@ -188,8 +192,6 @@ const getAllTorrents = () => {
           areTorrentsPaused = true;
         }
       });
-    } else {
-      torrentsList = [];
     }
   } catch {
     return null;
