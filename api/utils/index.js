@@ -30,16 +30,12 @@ const updateTorrentOnJSON = (name, torrentId, length, path, paused, date, done, 
   // Check if torrent already exists on JSON file
   const foundTorrent = torrentsList.some((torrent) => torrent.id === torrentId);
   // If torrent does not exists then we add it to the JSON, else then we updated it
-  if (!foundTorrent) {
-    torrentsList.push({
-      name, id: torrentId, length, path, paused, date, done, progress,
-    });
-  } else {
+  if (foundTorrent) {
     torrentsList = torrentsList.filter((torrent) => torrent.id !== torrentId);
-    torrentsList.push({
-      name, id: torrentId, length, path, paused, date, done, progress,
-    });
   }
+  torrentsList.push({
+    name, id: torrentId, length, path, paused, date, done, progress,
+  });
   fs.writeFileSync(filePath, JSON.stringify(torrentsList));
 };
 

@@ -1,6 +1,8 @@
 // Server
 const express = require('express');
 const cors = require('cors');
+// Open link in new tab
+const { shell } = require('electron');
 // eslint-disable-next-line no-underscore-dangle
 require('events').EventEmitter.prototype._maxListeners = 100;
 // Routes
@@ -58,6 +60,9 @@ const server = (io, dialog) => {
     socket.on('change:directory', async () => {
       const folder = await dialog.showOpenDialog({ properties: ['openDirectory'] });
       socket.emit('changed:directory', folder.filePaths[0]);
+    });
+    socket.on('play:torrent', (magnetURI) => {
+      shell.openExternal(`https://storm-web.vercel.app/id/${magnetURI}`);
     });
   });
 

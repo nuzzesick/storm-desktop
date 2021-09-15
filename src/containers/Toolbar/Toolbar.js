@@ -13,6 +13,8 @@ import {
   // CreateTorrentButton,
   ButtonLabel,
   // SettingsIcon,
+  DownloadIcon,
+  SeedIcon,
   PlayIcon,
   PauseIcon,
   DeleteTorrentIcon,
@@ -72,12 +74,35 @@ export const Toolbar = ({ setActiveFilter }) => {
           <MainContentContainer>
             <TorrentActionsContainer>
               <TorrentName>{torrentSelected.name}</TorrentName>
+              {
+                torrentSelected.hasVideo && (
+                <TorrentActionsButton onClick={() => {
+                  socket.emit('play:torrent', torrentSelected.magnetURI);
+                }}
+                >
+                  <PlayIcon />
+                  Play
+                </TorrentActionsButton>
+                )
+              }
               <TorrentActionsButton onClick={handleTorrent}>
                 {
                   torrentSelected.paused ? (
                     <>
-                      <PlayIcon />
-                      {torrentSelected.done ? 'Seed' : 'Resume'}
+
+                      {torrentSelected.done ? (
+                        <>
+                          <SeedIcon />
+                          {' '}
+                          Continue seeding
+                        </>
+                      ) : (
+                        <>
+                          <DownloadIcon />
+                          {' '}
+                          Continue downloading
+                        </>
+                      )}
                     </>
                   ) : (
                     <>
