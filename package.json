@@ -1,7 +1,7 @@
 {
   "name": "storm-desktop",
   "productName": "storm-desktop",
-  "version": "0.1.0",
+  "version": "0.12",
   "description": "Storm is a minimal torrent client that support WebTorrent",
   "private": true,
   "dependencies": {
