@@ -1,22 +1,34 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useState, useEffect } from 'react';
 import StormContext from '../../context/Storm.context';
-import { AppContent, TorrentsGrid, Content, EmptyState, EmptyTitle, EmptySubtitle, LoadingContent} from './TorrentsList.styles';
+import {
+  AppContent,
+  TorrentsGrid,
+  Content,
+  EmptyState,
+  EmptyTitle,
+  EmptySubtitle,
+  LoadingContent,
+} from './TorrentsList.styles';
 import Loading from '../../components/Loading/Loading';
 import EmptyStateIcon from './EmptyStateIcon';
 import TorrentCard from '../../components/TorrentCard/TorrentCard';
 import when from '../../helpers/when';
-import torrentListHandler from '../../helpers/torrentListHandler'
+import torrentListHandler from '../../helpers/torrentListHandler';
+
 
 const TorrentsList = ({ activeFilter }) => {
-  const { data: { torrentsList }} = useContext(StormContext);
+  const {
+    data: { torrentsList },
+  } = useContext(StormContext);
   const isLoading = torrentsList === null;
   const userHasTorrents = torrentsList && torrentsList.length > 0;
   const [torrentsToShow, setTorrentsToShow] = useState(torrentsList);
 
   useEffect(() => {
-      setTorrentsToShow(torrentListHandler(activeFilter, torrentsList))
+    setTorrentsToShow(torrentListHandler(activeFilter, torrentsList));
   }, [torrentsList, activeFilter]);
+
 
   return (
     <>
@@ -41,18 +53,22 @@ const TorrentsList = ({ activeFilter }) => {
       )}
 
       {when(!isLoading)(
-        <AppContent>
-          {torrentsToShow && torrentsToShow.length > 0 && (
-            <TorrentsGrid>
-              {torrentsToShow.map((torrent) => (
-                <TorrentCard
-                  torrent={torrent}
-                  key={`torrent-${torrent.magnetURI}`}
-                />
-              ))}
-            </TorrentsGrid>
-          )}
-        </AppContent>
+        <>
+          <AppContent>
+            {torrentsToShow && torrentsToShow.length > 0 && (
+              
+              <TorrentsGrid className="torrents">
+
+                  {torrentsToShow.map((torrent, i) => (
+                    <TorrentCard
+                      torrent={torrent}
+                      key={`torrent-${torrent.magnetURI}`}
+                    />
+                  ))}
+              </TorrentsGrid>
+            )}
+          </AppContent>
+        </>
       )}
     </>
   );
