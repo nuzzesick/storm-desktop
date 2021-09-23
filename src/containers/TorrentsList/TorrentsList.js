@@ -16,7 +16,6 @@ import TorrentCard from '../../components/TorrentCard/TorrentCard';
 import when from '../../helpers/when';
 import torrentListHandler from '../../helpers/torrentListHandler';
 
-
 const TorrentsList = ({ activeFilter }) => {
   const {
     data: { torrentsList },
@@ -28,7 +27,6 @@ const TorrentsList = ({ activeFilter }) => {
   useEffect(() => {
     setTorrentsToShow(torrentListHandler(activeFilter, torrentsList));
   }, [torrentsList, activeFilter]);
-
 
   return (
     <>
@@ -53,22 +51,18 @@ const TorrentsList = ({ activeFilter }) => {
       )}
 
       {when(!isLoading)(
-        <>
-          <AppContent>
-            {torrentsToShow && torrentsToShow.length > 0 && (
-              
-              <TorrentsGrid className="torrents">
-
-                  {torrentsToShow.map((torrent, i) => (
-                    <TorrentCard
-                      torrent={torrent}
-                      key={`torrent-${torrent.magnetURI}`}
-                    />
-                  ))}
-              </TorrentsGrid>
-            )}
-          </AppContent>
-        </>
+        <AppContent>
+          {torrentsToShow && torrentsToShow.length > 0 && (
+            <TorrentsGrid className="torrents">
+              {torrentsToShow.map((torrent) => (
+                <TorrentCard
+                  torrent={torrent}
+                  key={`torrent-${torrent.magnetURI}`}
+                />
+              ))}
+            </TorrentsGrid>
+          )}
+        </AppContent>
       )}
     </>
   );

@@ -12,7 +12,7 @@ const Home = () => {
     <>
       <Navbar activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
       <Toolbar setActiveFilter={setActiveFilter} />
-      <HomePageContainer onClick={() => clearTorrentSelection()}>
+      <HomePageContainer onClick={clearTorrentSelection}>
         <TorrentsList activeFilter={activeFilter} />
       </HomePageContainer>
     </>

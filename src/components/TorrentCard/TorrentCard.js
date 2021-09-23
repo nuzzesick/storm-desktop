@@ -70,8 +70,8 @@ const TorrentCard = ({ torrent }) => {
         </MainInfoContent>
         <ProgressBarContainer>
           <CircularProgressbar
-            value={calcPercentage(torrent.progress)  + "%"}
-            text={calcPercentage(torrent.progress) + "%"}
+            value={`${calcPercentage(torrent.progress)}%`}
+            text={`${calcPercentage(torrent.progress)}%`}
             styles={circularStyles}
           />
         </ProgressBarContainer>
