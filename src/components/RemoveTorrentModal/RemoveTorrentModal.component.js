@@ -31,6 +31,7 @@ const RemoveTorrentModal = ({ setIsRemoveDialogOpen }) => {
       await deleteTorrent(torrentSelected.magnetURI || torrentSelected.id, torrentSelected.paused);
     }
     clearTorrentSelection();
+    setIsRemoveDialogOpen(false);
   };
 
   useEffect(() => {
