@@ -1,9 +1,10 @@
 /* eslint-disable no-underscore-dangle */
 const fs = require('fs');
 const parseTorrent = require('parse-torrent');
+const wrtc = require('wrtc');
 const defaultAnnounceList = require('create-torrent').announceList;
-
 const WebTorrent = require('webtorrent');
+
 const {
   filePath,
   recoverClient,
@@ -19,6 +20,8 @@ const {
 globalThis.WEBTORRENT_ANNOUNCE = defaultAnnounceList
   .map((arr) => arr[0])
   .filter((url) => url.indexOf('wss://') === 0 || url.indexOf('ws://') === 0);
+
+globalThis.WRTC = wrtc;
 
 const WebTorrentClient = new WebTorrent();
 

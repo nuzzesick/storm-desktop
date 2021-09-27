@@ -30,7 +30,7 @@
     "styled-components": "^5.3.0",
     "web-vitals": "^1.0.1",
     "webtorrent": "^1.5.5",
-    "webtorrent-hybrid": "4.1.0",
+    "wrtc": "^0.4.7",
     "yarn": "^1.22.11"
   },
   "scripts": {
