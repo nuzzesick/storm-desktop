@@ -4,6 +4,7 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import dayjs from 'dayjs';
 import StormContext from '../../context/Storm.context';
+import Logo from '../../assets/vectors/logo.svg';
 import Colors from '../../commons/Colors';
 import { formatBytes, msToTime } from '../../utils';
 import {
@@ -17,6 +18,7 @@ import {
   TorrentInfoContainer,
   TorrentInfo,
   DateText,
+  TorrentImage,
 } from './TorrentCard.styles';
 
 const calcPercentage = (value) => ((value * 100).toFixed(0));
@@ -37,7 +39,7 @@ const TorrentCard = ({ torrent }) => {
     },
     text: {
       fill: 'white',
-      fontSize: '1.8rem',
+      fontSize: '1.6rem',
       fontWeight: 'bold',
     },
   };
@@ -55,22 +57,25 @@ const TorrentCard = ({ torrent }) => {
     >
       <TopContent>
         <MainInfoContent>
-          <TorrentName>{torrent.name}</TorrentName>
-          {
-            torrent.paused ? (
-              <ProgressText>Paused</ProgressText>
-            ) : (
-              <ProgressText>
-                {
-                  torrent.done ? 'Completed' : `${msToTime(torrent.timeRemaining)} remaining | ${formatBytes(torrent.downloadSpeed)}`
-                }
-              </ProgressText>
-            )
-          }
+          <TorrentImage image={torrent.screenshotURI ? torrent.screenshotURI : Logo} />
+          <div>
+            <TorrentName>{torrent.name}</TorrentName>
+            {
+              torrent.paused ? (
+                <ProgressText>Paused</ProgressText>
+              ) : (
+                <ProgressText>
+                  {
+                    torrent.done ? 'Completed' : `${msToTime(torrent.timeRemaining)} remaining | ${formatBytes(torrent.downloadSpeed)}`
+                  }
+                </ProgressText>
+              )
+            }
+          </div>
         </MainInfoContent>
         <ProgressBarContainer>
           <CircularProgressbar
-            value={`${calcPercentage(torrent.progress)}%`}
+            value={`${calcPercentage(torrent.progress)}`}
             text={`${calcPercentage(torrent.progress)}%`}
             styles={circularStyles}
           />

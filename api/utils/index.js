@@ -1,5 +1,10 @@
 const fs = require('fs');
 const pathSystem = require('path');
+const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
+const ffmpeg = require('fluent-ffmpeg');
+
+ffmpeg.setFfmpegPath(ffmpegInstaller.path);
+const extractFrames = require('ffmpeg-extract-frames');
 
 // File where all the torrents (as an array) will be stored
 const filePath = pathSystem.join(__dirname, '../../data.json');
@@ -61,6 +66,24 @@ const returnJSON = (req, res, next, code, status, message) => {
   next();
 };
 
+const checkIfFileIsCreated = (file) => fs.existsSync(file);
+
+const getFullPath = (file) => pathSystem.resolve(file);
+
+const takeVideoScreenshot = async (videoFolder, name, output) => {
+  try {
+    return await extractFrames({
+      input: videoFolder,
+      output: `${output}/${name}-video-screenshot.jpg`,
+      offsets: [
+        200000,
+      ],
+    });
+  } catch (error) {
+    return error;
+  }
+};
+
 module.exports = {
   filePath,
   recoverClient,
@@ -68,4 +91,7 @@ module.exports = {
   deleteTorrentFromJSON,
   getTorrentOnJSON,
   returnJSON,
+  checkIfFileIsCreated,
+  takeVideoScreenshot,
+  getFullPath,
 };
