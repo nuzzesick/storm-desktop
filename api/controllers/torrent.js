@@ -1,9 +1,10 @@
 /* eslint-disable no-underscore-dangle */
 const fs = require('fs');
 const parseTorrent = require('parse-torrent');
+const wrtc = require('wrtc');
+const defaultAnnounceList = require('create-torrent').announceList;
+const WebTorrent = require('webtorrent');
 
-const WebTorrent = require('webtorrent-hybrid');
-// const createATorrent = require('create-torrent');
 const {
   filePath,
   recoverClient,
@@ -11,7 +12,16 @@ const {
   deleteTorrentFromJSON,
   getTorrentOnJSON,
   returnJSON,
+  takeVideoScreenshot,
+  checkIfFileIsCreated,
+  getFullPath,
 } = require('../utils');
+
+globalThis.WEBTORRENT_ANNOUNCE = defaultAnnounceList
+  .map((arr) => arr[0])
+  .filter((url) => url.indexOf('wss://') === 0 || url.indexOf('ws://') === 0);
+
+globalThis.WRTC = wrtc;
 
 const WebTorrentClient = new WebTorrent();
 
@@ -143,7 +153,7 @@ const getAllTorrents = () => {
   let areTorrentsPaused = false;
   const torrentsList = [];
   try {
-    if (torrentsInJSON && torrentsInJSON.length > 0) {
+    if (torrentsInJSON.length) {
       torrentsInJSON.forEach((t) => {
         if (!t.paused) {
           const torrent = client.get(t.id);
@@ -154,10 +164,22 @@ const getAllTorrents = () => {
               length, magnetURI, ratio, ready, uploadSpeed, downloadSpeed, timeRemaining, done,
             } = torrent;
             const torrentName = torrent.files[0] && torrent.files[0]._torrent.name;
-            let hasVideo;
-            if (torrent.files.length && torrent.files.find((file) => file.name.endsWith('.mp4'))) hasVideo = true;
-            else hasVideo = false;
             const folder = `${pathname}/${torrentName}`;
+            let hasVideo = false;
+            const screenshotFolder = `${folder}/${name}-video-screenshot.jpg`;
+            let screenshotIsCreated = false;
+            if (torrent.files.length && torrent.files.find((file) => file.name.endsWith('.mp4'))) {
+              hasVideo = true;
+              const video = torrent.files.find((file) => file.name.endsWith('.mp4'));
+              const videoFolder = `${pathname}/${video.path}`;
+              const videoIsCreated = checkIfFileIsCreated(videoFolder);
+              screenshotIsCreated = checkIfFileIsCreated(screenshotFolder);
+              if (videoIsCreated && !screenshotIsCreated) {
+                takeVideoScreenshot(videoFolder, name, folder);
+              }
+            }
+            const screenshotURI = screenshotIsCreated
+              ? getFullPath(screenshotFolder) : null;
             torrentsList.push({
               name,
               created,
@@ -177,6 +199,7 @@ const getAllTorrents = () => {
               date: torrentDate,
               done,
               paused: false,
+              screenshotURI,
             });
           }
         } else {
@@ -193,12 +216,12 @@ const getAllTorrents = () => {
         }
       });
     }
+    if (torrentsList.length === client.torrents.length && !areTorrentsPaused) return torrentsList;
+    if (areTorrentsPaused) return torrentsList;
+    return null;
   } catch {
     return null;
   }
-  if (torrentsList.length === client.torrents.length && !areTorrentsPaused) return torrentsList;
-  if (areTorrentsPaused) return torrentsList;
-  return null;
 };
 
 module.exports = {

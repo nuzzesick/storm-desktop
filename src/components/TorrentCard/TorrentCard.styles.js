@@ -14,7 +14,7 @@ export const Card = styled.button`
   align-items: initial;
   text-align: left;
   &:hover {
-    background-color: #0e0e0e;
+    border-color: ${Colors.NEUTRAL_WHITE};
   }
   &:focus {
     outline: 0;
@@ -39,7 +39,19 @@ export const TopContent = styled.div`
 
 export const MainInfoContent = styled.div`
   display: flex;
-  flex-direction: column;
+  align-items: center;
+`;
+
+export const TorrentImage = styled.div`
+  display: inline-block;
+  width: 2.4rem;
+  height: 2.4rem;
+  margin-right: 1rem;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  background-size: cover;
+  background-image: ${({ image }) => `url('${image}')`};
 `;
 
 export const TorrentName = styled.div`
@@ -66,8 +78,8 @@ export const ProgressText = styled.div`
 `;
 
 export const ProgressBarContainer = styled.div`
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 2.4rem;
+  height: 2.4rem;
 `;
 
 export const BottomContent = styled.div`

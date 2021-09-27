@@ -4,7 +4,7 @@ const cors = require('cors');
 // Open link in new tab
 const { shell } = require('electron');
 // eslint-disable-next-line no-underscore-dangle
-require('events').EventEmitter.prototype._maxListeners = 100;
+require('events').EventEmitter.prototype._maxListeners = Infinity;
 // Routes
 const {
   DOWNLOAD_TORRENT_ROUTE,
